@@ -12,18 +12,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('combined')); // Active le middleware de logging
 
 app.use(express.static(__dirname + '/public')); // Indique que le dossier /public contient des fichiers statiques (middleware chargé de base)
+var userController = require("./controller/user.js");
 
 logger.info('server start');
 
 app.get('/', function(req, res){
-    res.redirect('/login');
+    res.redirect('index');
 });
 
 app.get('/login', function(req, res){
     res.render('login');
 });
 
-app.listen(1313);
+app.get('/index', function(req, res){
+    res.render('index');
+});
 
+app.get('/register', function(req, res){
+    res.render('register');
+});
+
+app.post('/create', userController.inscription);
+app.post('/loginVerif', userController.login);
+
+app.listen(1313);
 
 
