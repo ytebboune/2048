@@ -3,6 +3,7 @@ var morgan = require('morgan'); // Charge le middleware de logging
 var logger = require('log4js').getLogger('Server');
 var bodyParser = require('body-parser');
 var app = express();
+var session = require('express-session');
 
 // config
 app.set('view engine', 'ejs');
@@ -15,6 +16,20 @@ app.use(express.static(__dirname + '/public')); // Indique que le dossier /publi
 var userController = require("./controller/user.js");
 
 logger.info('server start');
+
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: {}
+}));
+
+app.use(function (req, res, next) {
+    res.locals._rank = req.session.rank;
+
+    res.locals._error = req.query.error;
+    res.locals._success = req.query.success;
+
+    next();
+});
 
 app.get('/', function(req, res){
     res.redirect('index');
@@ -30,6 +45,17 @@ app.get('/index', function(req, res){
 
 app.get('/register', function(req, res){
     res.render('register');
+});
+
+app.get('/admin', function(req, res){
+    if (req.session.rank == 1)
+        res.render('admin');
+    else
+        res.render('error',{
+        title: 'error',
+            error: "T'ES PAS ADMIN gros con",
+            error2: "oui"
+    });
 });
 
 app.post('/create', userController.inscription);

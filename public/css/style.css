@@ -1,5 +1,6 @@
 body {
-    padding-top: 90px;
+    background-color: #faf8ef;
+
 }
 .panel-login {
     border-color: #ccc;
@@ -96,4 +97,10 @@ body {
     color: #fff;
     background-color: #1CA347;
     border-color: #1CA347;
+}
+
+a
+{
+    display:block;
+    text-align:center;
 }

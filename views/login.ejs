@@ -1,20 +1,18 @@
 <% var title = 'Formulaire login' %>
 <% include head %>
 
-<h1>Login</h1>
-
-<form method="post" action="/loginVerif">
-  <p>
-    <label>Username:</label>
-    <input type="text" name="username">
-  </p>
-  <p>
-    <label>Password:</label>
-    <input type="text" name="password">
-  </p>
-  <p>
-    <input type="submit" value="Login">
-  </p>
-</form>
-
+<div class="container">
+  <div class="row">
+    <div class="signup-form"><!--sign up form-->
+      <h2 style="text-align : center;">Identification </h2>
+      <form method="post" action="/loginVerif">
+        <input style="display: block; margin : auto; width:50%;" type="text" name="username" placeholder="Username" required/>
+        <br/>
+        <input style="display: block; margin : auto; width:50%;" type="password" name="password" pattern="[A-Za-z0-9]{6,8}" placeholder="Password" required/>
+        <br/>
+        <button style="display: block; margin : auto; width:20%;" type="submit" value="Login" class="btn btn-default">Signup</button>
+      </form>
+    </div><!--/sign up form-->
+  </div>
+</div>
 <% include foot %>

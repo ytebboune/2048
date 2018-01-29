@@ -1,5 +1,6 @@
 var user = require("../model/user.js");
 var sequelize = require('../db.js');
+var encrypt = require('../encrypt');
 
 module.exports.inscription = function (req, res) {
     var email = req.body.email;
@@ -33,7 +34,7 @@ module.exports.inscription = function (req, res) {
 };
 module.exports.login = function (req, res) {
     var username = req.body.username;
-    var password = req.body.password;
+    var password = encrypt(req.body.password);
 
     user.findOne({
         where: {
@@ -49,7 +50,7 @@ module.exports.login = function (req, res) {
             });
         } else {
             console.log('', user);
-
+            req.session.rank = user.dataValues.rank;
             res.redirect('index');
 
         }
