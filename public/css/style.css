@@ -104,3 +104,14 @@ a
     display:block;
     text-align:center;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #bfc5c5;
+    color: #404242;
+    text-align: center;
+}
