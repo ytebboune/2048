@@ -192,7 +192,8 @@ function actionClavier(e) {
         }
     }
     if (victoire() == true) {
-        console.log("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
+        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
+        // console.log("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
     }
     /*if (defaite() == true) {
         console.log("Vous avez perdu après " + tempsEcoule + " millisecondes.");
