@@ -53,6 +53,17 @@ app.get('/classement', function(req, res){
         });
 });
 
+app.get('/myaccount', function(req, res){
+    if (req.session.username != null)
+        res.render('myaccount');
+    else
+        res.render('error',{
+            title: 'error',
+            error: "Vous n'êtes pas connecté",
+            error2: "dommage"
+        });
+});
+
 app.get('/admin', function(req, res){
     if (req.session.rank == 1)
         res.render('admin');

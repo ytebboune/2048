@@ -140,6 +140,7 @@ function victoire() {
                 if (tempsEcoule == 0) {
                     fin = new Date();
                     tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
+                    tempsEcoule = tempsEcoule/1000;
                 }
                 return true;
             }
@@ -192,11 +193,13 @@ function actionClavier(e) {
         }
     }
     if (victoire() == true) {
-        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
-        // console.log("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
+        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " secondes.");
+        $(".recommencer").html("<a href='index'>Recommencer</a>");
+        // console.log("Vous avez finis le jeu en " + tempsEcoule + " secondes.");
     }
     /*if (defaite() == true) {
-        console.log("Vous avez perdu après " + tempsEcoule + " millisecondes.");
+        $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
+        $(".recommencer").html("<a href='index'>Recommencer</a>");
     } else {
         newValeur();
         afficherGrille();

@@ -36,14 +36,16 @@
                 <li ><a href="/index">Home</a></li>
                 <% if (!_username) { %>
                 <li ><a href="/login">Login</a></li>
-                <% }
-
-                if (_username) { %>
+                <% } %>
+                <% if (_username) { %>
+                <li class="myaccount"><a href="/myaccount">Mon Compte</a></li>
+                <% } %>
+                <% if (_username) { %>
                 <li class="classement"><a href="/classement">Classement</a></li>
-                <% }%>
+                <% } %>
                 <% if (_username) { %>
                 <li class="disconnect"><a href="/disconnect">Déconnexion</a></li>
-                <% }%>
+                <% } %>
             </ul>
             <% if (_rank == 1 ) { %>
             <form method="get" action="/admin">
