@@ -20,6 +20,8 @@ module.exports.inscription = function (req, res) {
             if (email == '' || password == '')
                 throw new Error('Veuillez renseigner les informations');
             console.log('Data successfully inserted', user);
+            req.session.username = user.dataValues.username;
+            req.session.rank = user.dataValues.rank;
             res.render('index', {title: 'index', name: email});
 
         }).catch(function (error) {
@@ -51,6 +53,7 @@ module.exports.login = function (req, res) {
         } else {
             console.log('', user);
             req.session.rank = user.dataValues.rank;
+            req.session.username = user.dataValues.username;
             res.redirect('index');
 
         }
@@ -61,4 +64,10 @@ module.exports.login = function (req, res) {
             error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
         });
     });
+};
+
+module.exports.disconnect = function(req, res){
+    delete req.session.username;
+    delete req.session.rank;
+    res.redirect('index');
 };

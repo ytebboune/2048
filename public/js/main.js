@@ -9,22 +9,28 @@
 /*scroll to top*/
 
 $(document).ready(function(){
-    $(".adm").hide();
-    if (gcookie("rank") == 1) {
+    $(".classement").hide();
 
-        $(".adm").show();
+    if(req.session.username != null)
+    {
+        $(".classement").show();
     }
-    $(".prof").hide();
-    if(gcookie("id")){
-        $(".prof").show();
-    }
-
-    $('.disconnect').hide();
-    if(gcookie('id'))
-        $(".disconnect").show();
-    $('.dropdown').show();
-    if(gcookie('id'))
-        $(".dropdown").hide();
+    // $(".adm").hide();
+    // if (gcookie("rank") == 1) {
+    //
+    //     $(".adm").show();
+    // }
+    // $(".prof").hide();
+    // if(gcookie("id")){
+    //     $(".prof").show();
+    // }
+    //
+    // $('.disconnect').hide();
+    // if(gcookie('id'))
+    //     $(".disconnect").show();
+    // $('.dropdown').show();
+    // if(gcookie('id'))
+    //     $(".dropdown").hide();
 
     $(function () {
 		$.scrollUp({

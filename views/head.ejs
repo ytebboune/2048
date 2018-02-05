@@ -14,15 +14,15 @@
             color: green;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="css/2048.css"/>
     <script type="text/javascript" src="js/2048.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
     <link href="css/style.css" rel="stylesheet">
+    <script  type="text/javascript" src="js/main.js"></script>
 
 </head>
 <header id="header"><!--header-->
@@ -34,11 +34,27 @@
             </div>
             <ul class="nav navbar-nav">
                 <li ><a href="/index">Home</a></li>
+                <% if (!_username) { %>
                 <li ><a href="/login">Login</a></li>
+                <% }
+
+                if (_username) { %>
+                <li class="classement"><a href="/classement">Classement</a></li>
+                <% }%>
+                <% if (_username) { %>
+                <li class="disconnect"><a href="/disconnect">Déconnexion</a></li>
+                <% }%>
             </ul>
+            <% if (_rank == 1 ) { %>
+            <form method="get" action="/admin">
+                <button type="submit" class="btn btn-danger navbar-btn">Admin</button>
+            </form>
+            <% }  if (!_username) { %>
             <form method="get" action="/register">
                 <button type="submit" class="btn btn-danger navbar-btn">Register</button>
             </form>
+            <% } %>
+
         </div>
     </nav>
 </header>
