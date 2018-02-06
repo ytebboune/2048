@@ -1,33 +1,39 @@
 <% var title = 'Page accueil' %>
-<% include head %>
-<body onload="init();">
-        <div id="jeu">
-            <div class="ligne">
-                <div  class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-                <div  class="case"></div>
+    <% include head %>
+
+        <body onload="init();">
+            <div id="jeu">
+                <div class="ligne">
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                </div>
+                <div class="ligne">
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                </div>
+                <div class="ligne">
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                </div>
+                <div class="ligne">
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                </div>
             </div>
-            <div class="ligne">
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
+            <div id="btn_jeu">
+                <div class="btn_2048"><a href="index">Demarrer</a></div>
+                <div class="btn_2048"><a href="index">Recommencer</a></div>
             </div>
-            <div class="ligne">
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-            </div>
-            <div class="ligne">
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
-            </div>
-        </div>
-        <div class="message"></div>
-        <div class="recommencer"></div>
-</body>
-<% include foot %>
+
+            <div class="message"></div>
+        </body>
+
+    <% include foot %>
