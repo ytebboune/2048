@@ -232,20 +232,6 @@ function deplacementVersHaut() {
     }
 }
 
-function deplacementVersHaut() {
-    //console.log("haut");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 0; i < 3; i++) {
-                if (grille[i][j].getValeur() == "") {
-                    grille[i][j].insertionValeur(grille[i + 1][j].getValeur());
-                    grille[i + 1][j].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
 function deplacementVersBas() {
     //console.log("bas");
     for (x = 0; x < 3; x++) {
