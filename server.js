@@ -18,6 +18,7 @@ app.use(session({
 }));
 
 app.use(function (req, res, next) {
+    res.locals._id = req.session.id_user;
     res.locals._rank = req.session.rank;
     res.locals._username = req.session.username;
     res.locals._error = req.query.error;
@@ -53,16 +54,9 @@ app.get('/classement', function(req, res){
         });
 });
 
-app.get('/myaccount', function(req, res){
-    if (req.session.username != null)
-        res.render('myaccount');
-    else
-        res.render('error',{
-            title: 'error',
-            error: "Vous n'êtes pas connecté",
-            error2: "dommage"
-        });
-});
+app.get('/myaccount', userController.getProfil);
+
+app.post('/myaccount', userController.modifProfil);
 
 app.get('/admin', function(req, res){
     if (req.session.rank == 1)
