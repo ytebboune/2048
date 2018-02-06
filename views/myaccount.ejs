@@ -3,4 +3,16 @@
 
 <h1>Bienvenue sur votre panel utilisateur</h1>
 
+<form method="POST">
+	<p>
+		<input type="text" name="nomUser" value="<%= nom %>">
+	</p>
+	<p>
+		<input type="text" name="emailUser" value="<%= email %>">
+	</p>
+	<p>
+		<button type="submit">Modifier le profil</button>
+	</p>	
+</form>
+
 <% include foot %>

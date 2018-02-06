@@ -22,6 +22,7 @@ module.exports.inscription = function (req, res) {
             console.log('Data successfully inserted', user);
             req.session.username = user.dataValues.username;
             req.session.rank = user.dataValues.rank;
+            req.session.id = user.dataValues.id;
             res.render('index', {title: 'index', name: email});
 
         }).catch(function (error) {
@@ -54,6 +55,7 @@ module.exports.login = function (req, res) {
             console.log('', user);
             req.session.rank = user.dataValues.rank;
             req.session.username = user.dataValues.username;
+            req.session.id_user = user.dataValues.id;
             res.redirect('index');
 
         }
@@ -69,5 +71,51 @@ module.exports.login = function (req, res) {
 module.exports.disconnect = function(req, res){
     delete req.session.username;
     delete req.session.rank;
+    delete req.session.id;
     res.redirect('index');
 };
+
+module.exports.getProfil = function(req, res){
+
+    if (req.session.username != null){
+        user.findOne({
+            where: {
+                id: req.session.id_user
+            }
+    }).then(function(user){
+        var nom = user.dataValues.username;
+        var email = user.dataValues.email;
+        
+        console.log(req.session.id);
+
+        res.render('myaccount',{
+            nom: nom,
+            email: email
+        }
+        );
+    });
+    } else
+        res.render('error',{
+            title: 'error',
+            error: "Vous n'êtes pas connecté",
+            error2: "dommage"
+    });
+};
+
+module.exports.modifProfil = function(req,res){
+
+    user.update({
+        username: req.body.nomUser,
+        email: req.body.emailUser,
+    },
+    { where: {id: req.session.id_user}} )
+    .then(function(user){
+        res.redirect('/index');
+    }).catch(function(error){
+            res.render('error',{
+            title: 'error',
+            error: "Vous n'êtes pas connecté",
+            error2: "dommage"
+    });
+    })
+}
