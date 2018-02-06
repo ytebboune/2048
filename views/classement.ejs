@@ -1,8 +1,102 @@
-<% var title = 'Classement' %>
+<% var title = 'Classement';%>
+
 <% include head %>
+    
+    <div class="span5">
+        <h4>Classement des meilleurs joueurs en temps</h4>
+        <table border="1">
+            <% classements[0].forEach(function(joueurGeneralDuree){ %>
+                <tr>
+                    <td>
+                        <%= joueurGeneralDuree.username %>
+                    </td>
+                    <td>
+                        <%= joueurGeneralDuree.recordDuree %>
+                    </td>
+                    <td>
+                        <form method="post" action="/supprimerDuClassement">
+                            <input type="hidden" value="<%=joueurGeneralDuree.username%>">
+                            <p>
+                                <input type="submit" value="Supprimer pour triche">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
 
-<h1>Classement des meilleurs joueurs</h1>
+    <div class="span5">
+        <h4>Classement des meilleurs joueurs en coups</h4>
+        <table border="1">
+            <% classements[1].forEach(function(joueur){ %>
+                <tr>
+                    <td>
+                        <%= joueur.username %>
+                    </td>
+                    <td>
+                        <%= joueur.recordDuree %>
+                    </td>
+                    <td>
+                        <form method="post" action="/supprimerDuClassement">
+                            <input type="hidden" value="<%=joueur.username%>">
+                            <p>
+                                <input type="submit" value="Supprimer pour triche">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
 
-<h1>Votre classement</h1>
+    <div class="span5">
+        <h4>Classement des meilleurs joueurs hebdomadaires en temps</h4>
+        <table border="1">
+            <% classements[2].forEach(function(joueur){ %>
+                <tr>
+                    <td>
+                        <%= joueur.username %>
+                    </td>
+                    <td>
+                        <%= joueur.recordDuree %>
+                    </td>
+                    <td>
+                        <form method="post" action="/supprimerDuClassement">
+                            <input type="hidden" value="<%=joueur.username%>">
+                            <p>
+                                <input type="submit" value="Supprimer pour triche">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+
+    <div class="span5">
+        <h4>Classement des meilleurs joueurs hebdomadaires en coups</h4>
+        <table border="1">
+            <% classements[3].forEach(function(joueur){ %>
+                <tr>
+                    <td>
+                        <%= joueur.username %>
+                    </td>
+                    <td>
+                        <%= joueur.recordDuree %>
+                    </td>
+                    <td>
+                        <form method="post" action="/supprimerDuClassement">
+                            <input type="hidden" value="<%=joueur.username%>">
+                            <p>
+                                <input type="submit" value="Supprimer pour triche">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
 
 <% include foot %>
+
