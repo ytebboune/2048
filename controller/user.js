@@ -10,30 +10,44 @@ module.exports.inscription = function (req, res) {
         var rank = 1;
     else
         var rank = 0;
-    if (email != null && password != null) {
-        user.create({
-            email: email,
-            username: username,
-            password: password,
-            rank: rank
-        }).then(function (user) {
-            if (email == '' || password == '')
-                throw new Error('Veuillez renseigner les informations');
-            console.log('Data successfully inserted', user);
-            req.session.username = user.dataValues.username;
-            req.session.rank = user.dataValues.rank;
-            res.render('index', {title: 'index', name: email});
+    function isIdUnique (email, username) {
+        return user.count({ where: { $or: [{email: email}, {username: username}] }})
+            .then(function(count){
+                if (count != 0) {
+                    return false;
+                }
+                return true;
+            });
+    }
+    isIdUnique(email, username).then(function(isUnique){
+        if (isUnique) {
+            user.create({
+                email: email,
+                username: username,
+                password: password,
+                rank: rank
+            }).then(function (users) {
+                if (email == '' || password == '')
+                    throw new Error('Veuillez renseigner les informations');
+                res.redirect('index');
 
-        }).catch(function (error) {
-            console.log('Error in Inserting Record', error);
+            }).catch(function (error) {
+                console.log('Error in Inserting Record', error);
+                res.render('error', {
+                    title: 'error',
+                    error: "Veuillez renseigner les informations d'inscriptions",
+                    error2: "Retournez vous inscrire pour saisir une bonne fois pour toute des identifiants corrects !"
+                });
+            });
+        }
+        else
             res.render('error', {
                 title: 'error',
-                error: "Veuillez renseigner les informations d'inscriptions",
+                error: "Utilisateur déjà existant",
                 error2: "Retournez vous inscrire pour saisir une bonne fois pour toute des identifiants corrects !"
             });
-        });
-    }
-};
+    })};
+
 module.exports.login = function (req, res) {
     var username = req.body.username;
     var password = encrypt(req.body.password);

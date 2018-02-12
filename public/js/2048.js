@@ -1,4 +1,3 @@
-/*<![CDATA[*/
 var grille;
 var bool = false;
 var oldGrille;
@@ -202,7 +201,7 @@ function actionClavier(e) {
         afficherGrille();
     }*/
     if(comparer()){
-       newValeur();
+        newValeur();
         afficherGrille();
     }
 }
