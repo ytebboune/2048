@@ -22,6 +22,8 @@ app.use(function (req, res, next) {
     res.locals._id = req.session.id_user;
     res.locals._rank = req.session.rank;
     res.locals._username = req.session.username;
+    res.locals._temps = req.session.temps;
+    res.locals._coups = req.session.coups;
     res.locals._error = req.query.error;
     res.locals._success = req.query.success;
 
@@ -46,9 +48,7 @@ app.get('/register', function(req, res){
 
 app.get('/classement', function(req, res){
     if (req.session.username != null) {
-        console.log('TEST 0');
         classementController.classements(res);
-        console.log('TEST 0.5');
     } else
         res.render('error',{
             title: 'error',
@@ -76,6 +76,7 @@ app.get('/disconnect', userController.disconnect);
 
 app.post('/create', userController.inscription);
 app.post('/loginVerif', userController.login);
+app.post('/NouveauRecord', classementController.NouveauRecord);
 
 app.listen(1313);
 
