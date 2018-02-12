@@ -369,3 +369,24 @@ function testFusionGauche() {
     }
     return tmp;
 }
+
+function isIdUnique (email, username) {
+    return user.count({ where: { $or: [{email: email}, {username: username}] }})
+        .then(function(count){
+            if (count != 0) {
+                return false;
+            }
+            return true;
+        });
+}
+
+
+function isIdUnique (username) {
+    return user.count({ where: {username: username}})
+        .then(function(count){
+            if (count != 0) {
+                return false;
+            }
+            return true;
+        });
+}

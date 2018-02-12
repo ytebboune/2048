@@ -22,6 +22,8 @@ app.use(function (req, res, next) {
     res.locals._id = req.session.id_user;
     res.locals._rank = req.session.rank;
     res.locals._username = req.session.username;
+    res.locals._email = req.session.email;
+
     res.locals._error = req.query.error;
     res.locals._success = req.query.success;
 
