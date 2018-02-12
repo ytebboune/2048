@@ -1,9 +1,11 @@
+/*<![CDATA[*/
 var grille;
 var bool = false;
 var oldGrille;
-var debut;
+var debut = 0;
 var fin;
 var tempsEcoule = 0;
+var coups;
 
 function init() {
 
@@ -17,6 +19,7 @@ function init() {
     }
     newValeur();
     newValeur();
+    coups = 0;
 
     oldGrille = new Array(4);
     for (i = 0; i < 4; i++) {
@@ -26,7 +29,6 @@ function init() {
         }
     }
     afficherGrille();
-    debut = new Date();
 }
 
 function sauverGrille() {
@@ -135,10 +137,11 @@ maCase.prototype.setBool = function (b) {
 function victoire() {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == "16") {
+            if (grille[i][j].getValeur() == "2048") {
                 if (tempsEcoule == 0) {
                     fin = new Date();
                     tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
+                    tempsEcoule = tempsEcoule / 1000;
                 }
                 return true;
             }
@@ -147,27 +150,36 @@ function victoire() {
     return false;
 }
 
-/*function defaite() {
-    if (comparer() && tempsEcoule == 0) {
-        return false;
+function defaite() {
+    var tmp = 0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            if (grille[i][j].getValeur() == 0){
+                tmp +=1;
+            }
+        }
     }
-    else if(comparer() && tempsEcoule != 0) {
-        return false;
+    if(tmp == 0){
+        if(testFusionHaut() == false && testFusionBas() == false && testFusionDroite() == false && testFusionGauche() == false) {
+            if (tempsEcoule == 0) {
+                fin = new Date();
+                tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
+                tempsEcoule = tempsEcoule / 1000;
+            }
+            return true;
+        }
     }
-    else if(tempsEcoule == 0){
-        fin = new Date();
-        tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
-        return true;
-    }
-    else {
-        return true;
-    }
-}*/
+    return false;
+}
 
 function actionClavier(e) {
+    if (defaite() == true) {
+        $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
+    }
+    
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
-
+    
     if (victoire() == false) {
         if (key == 38) {
             deplacementVersHaut();
@@ -187,23 +199,23 @@ function actionClavier(e) {
         } else if (key == 39) {
             deplacementVersDroite();
             fusionerVersDroite();
-            deplacementVersDroite();
+            deplacementVersDroite();   
         }
     }
+    
+    if (debut == 0) {
+        debut = new Date();
+    }
     if (victoire() == true) {
-        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
-        // console.log("Vous avez finis le jeu en " + tempsEcoule + " millisecondes.");
+        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " secondes.");
     }
-    /*if (defaite() == true) {
-        console.log("Vous avez perdu après " + tempsEcoule + " millisecondes.");
-    } else {
+
+    if (comparer()) {
         newValeur();
         afficherGrille();
-    }*/
-    if(comparer()){
-        newValeur();
-        afficherGrille();
+        coups++;
     }
+
 }
 
 function deplacementVersHaut() {
@@ -308,4 +320,52 @@ function fusionerVersDroite() {
             }
         }
     }
+}
+
+function testFusionHaut() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 0; i < 3; i++) {
+            if (grille[i][j].getValeur() == grille[i + 1][j].getValeur() && grille[i][j].getValeur() != 0) {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
+}
+
+function testFusionBas() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 3; i > 0; i--) {
+            if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
+}
+
+function testFusionDroite() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 3; i > 0; i--) {
+            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
+}
+
+function testFusionGauche() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 0; i < 3; i++) {
+            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
 }
