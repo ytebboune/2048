@@ -158,7 +158,7 @@ module.exports.modifProfil = function (req, res) {
     var username = req.body.nomUser;
     var oldMdp = req.body.ancienMdp;
 
-    isIdUnique(email, username).then(function (isUnique) { // CAS : LES 2 SONT PUTAINS D'UNIQUES
+    isIdUnique(email, username).then(function (isUnique) { // CAS : LES 2 SONT UNIQUES
         if (isUnique) {
             user.update({
                     username: req.body.nomUser,
