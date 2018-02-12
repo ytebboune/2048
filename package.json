@@ -10,8 +10,8 @@
   "keywords": [
     "NODEJS"
   ],
-  "author": "kbouzidi",
-  "license": "MIT",
+  "author": "Zozo",
+  "license": "IDSE",
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
