@@ -151,18 +151,64 @@ module.exports.getProfil = function (req, res) {
 };
 
 module.exports.modifProfil = function (req, res) {
-    //TODO : - Si l'user ne veut pas changer son mot de passe
-    //TODO : - Changer les sessions après la modification du profil
-
+    // TODO : Quand on change un élément sans changer le nouveau mdp, met un mdp bizarre
     var email = req.body.emailUser;
     var username = req.body.nomUser;
     var oldMdp = req.body.ancienMdp;
+    var newMdp = req.body.newMdp;
 
+    if ((req.body.newMdp == '' || req.body.newMdp == oldMdp) && req.body.emailUser == req.session.email && req.body.nomUser == req.session.username){
+        res.render('error', {
+            title: 'error',
+            error: "Vous n'avez rien changé",
+            error2: "Veuillez modifier un élément du profil"
+        });
+        return;
+}
+
+    if (req.body.ancienMdp == '') {
+        res.render('error', {
+            title: 'error',
+            error: "Vous n'avez pas renseigné votre ancien mot de passe",
+            error2: "dommage"
+        });
+        return;
+    }
+
+    console.log(newMdp);
     isIdUnique(email, username).then(function (isUnique) { // CAS : LES 2 SONT UNIQUES
         if (isUnique) {
+            if (req.body.newMdp == ''){
+                newMdp == oldMdp;
+            }
             user.update({
                     username: req.body.nomUser,
                     email: req.body.emailUser,
+                    password: newMdp
+                },
+                {
+                    where: {
+                        id: req.session.id_user,
+                        password: encrypt(req.body.ancienMdp)
+                    }
+                })
+                .then(function (user) {
+                    req.session.username = req.body.nomUser;
+                    req.session.email = req.body.emailUser;
+                    res.redirect('/index');
+                }).catch(function (error) {
+                res.render('error', {
+                    title: 'error',
+                    error: "Vous n'êtes pas connecté",
+                    error2: "dommage"
+                });
+            })
+        }
+        else if (req.body.nomUser == req.session.username && req.body.emailUser == req.session.email && req.body.newMdp != '' ){
+            if (req.body.newMdp == ''){
+                newMdp == oldMdp;
+            }
+            user.update({
                     password: req.body.newMdp
                 },
                 {
@@ -179,14 +225,17 @@ module.exports.modifProfil = function (req, res) {
                     error: "Vous n'êtes pas connecté",
                     error2: "dommage"
                 });
-            })
+            });
         }
         else if (req.body.emailUser == req.session.email) { // CAS : L'USER NE CHANGE PAS SON EMAIL
+            if (req.body.newMdp == ''){
+                newMdp == oldMdp;
+            }
             isUsernameUnique(username).then(function (isUsernameUnique) {
                 if (isUsernameUnique) {
                     user.update({
                             username: req.body.nomUser,
-                            password: req.body.newMdp
+                            password: newMdp
                         },
                         {
                             where: {
@@ -195,6 +244,7 @@ module.exports.modifProfil = function (req, res) {
                             }
                         })
                         .then(function (user) {
+                            req.session.username = req.body.nomUser;
                             res.redirect('/index');
                         }).catch(function (error) {
                         res.render('error', {
@@ -214,11 +264,14 @@ module.exports.modifProfil = function (req, res) {
             })
         }
         else if (req.body.nomUser == req.session.username) { // CAS : L'USER NE CHANGE PAS SON USERNAME
+            if (req.body.newMdp == ''){
+                newMdp == oldMdp;
+            }
             isEmailUnique(email).then(function (isEmailUnique) {
                     if (isEmailUnique) {
                         user.update({
                                 email: req.body.emailUser,
-                                password: req.body.newMdp
+                                password: newMdp
                             },
                             {
                                 where: {
@@ -227,6 +280,7 @@ module.exports.modifProfil = function (req, res) {
                                 }
                             })
                             .then(function (user) {
+                                req.session.email = req.body.emailUser;
                                 res.redirect('/index');
                             }).catch(function (error) {
                             res.render('error', {
@@ -248,16 +302,16 @@ module.exports.modifProfil = function (req, res) {
                 }
             )
         }
+
         else {
             res.render('error', {
                 title: 'error',
-                error: "L'Username ou l'email que vous avez décidé de choisir est déjà pris",
-                error2: "Veuillez en choisir un nouveau"
+                error: "Vous n'avez rien changé",
+                error2: "Veuillez modifier un élément du profil"
             });
         }
     });
 }
-
     module.exports.modifMdp = function (req, res) {
         if (req.body.newMdp.length >= 6) {
             var pwd = req.body.newMdp;
