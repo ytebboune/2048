@@ -70,7 +70,7 @@ app.get('/admin', function(req, res){
         res.render('error',{
         title: 'error',
             error: "Vous n'avez pas les droits suffisants pour accéder à cette page",
-            error2: "Dommage."
+            error2: "Dommage !"
     });
 });
 
