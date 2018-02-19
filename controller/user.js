@@ -207,8 +207,13 @@ module.exports.modifProfil = function (req, res) {
                 })
                 .then(function (user) {
                     classement.update({
-                        username:username
-                    });
+                            username: req.body.nomUser,
+                        },
+                        {
+                            where: {
+                                id: req.session.id_user,
+                            }
+                        });
                     req.session.username = req.body.nomUser;
                     req.session.email = req.body.emailUser;
                     res.redirect('/index');
@@ -232,8 +237,13 @@ module.exports.modifProfil = function (req, res) {
                 })
                 .then(function (user) {
                     classement.update({
-                        username:username
-                    });
+                            username: req.body.nomUser,
+                        },
+                        {
+                            where: {
+                                id: req.session.id_user,
+                            }
+                        });
                     res.redirect('/index');
                 }).catch(function (error) {
                 res.render('error', {
@@ -300,8 +310,13 @@ module.exports.modifProfil = function (req, res) {
                             })
                             .then(function (user) {
                                 classement.update({
-                                    username:username
-                                });
+                                        username: req.body.nomUser,
+                                    },
+                                    {
+                                        where: {
+                                            id: req.session.id_user,
+                                        }
+                                    });
                                 req.session.email = req.body.emailUser;
                                 res.redirect('/index');
                             }).catch(function (error) {
