@@ -175,15 +175,23 @@ module.exports.modifProfil = function (req, res) {
         return;
     }
 
+    if (req.body.newMdp == ''){
+        newMdp = oldMdp;
+    }
+
+    if (req.body.nomUser == ''){
+        username = req.session.username;
+    }
+    if (req.body.emailUser == ''){
+        email = req.session.email;
+    }
+
     console.log(newMdp);
     isIdUnique(email, username).then(function (isUnique) { // CAS : LES 2 SONT UNIQUES
         if (isUnique) {
-            if (req.body.newMdp == ''){
-                newMdp == oldMdp;
-            }
             user.update({
-                    username: req.body.nomUser,
-                    email: req.body.emailUser,
+                    username: username,
+                    email: email,
                     password: newMdp
                 },
                 {
@@ -205,9 +213,6 @@ module.exports.modifProfil = function (req, res) {
             })
         }
         else if (req.body.nomUser == req.session.username && req.body.emailUser == req.session.email && req.body.newMdp != '' ){
-            if (req.body.newMdp == ''){
-                newMdp == oldMdp;
-            }
             user.update({
                     password: req.body.newMdp
                 },
@@ -228,9 +233,6 @@ module.exports.modifProfil = function (req, res) {
             });
         }
         else if (req.body.emailUser == req.session.email) { // CAS : L'USER NE CHANGE PAS SON EMAIL
-            if (req.body.newMdp == ''){
-                newMdp == oldMdp;
-            }
             isUsernameUnique(username).then(function (isUsernameUnique) {
                 if (isUsernameUnique) {
                     user.update({
@@ -257,20 +259,17 @@ module.exports.modifProfil = function (req, res) {
                 else {
                     res.render('error', {
                         title: 'error',
-                        error: "L'Username que vous avez décidé de choisir est déjà pris",
+                        error: "L'Username que vous avez décidé de choisir est déjà pris ou n'est pas autorisé ",
                         error2: "Veuillez en choisir un nouveau"
                     });
                 }
             })
         }
         else if (req.body.nomUser == req.session.username) { // CAS : L'USER NE CHANGE PAS SON USERNAME
-            if (req.body.newMdp == ''){
-                newMdp == oldMdp;
-            }
             isEmailUnique(email).then(function (isEmailUnique) {
                     if (isEmailUnique) {
                         user.update({
-                                email: req.body.emailUser,
+                                email: email,
                                 password: newMdp
                             },
                             {
@@ -294,7 +293,7 @@ module.exports.modifProfil = function (req, res) {
                     else {
                         res.render('error', {
                             title: 'error',
-                            error: "L'Email que vous avez décidé de choisir est déjà pris",
+                            error: "L'Email que vous avez décidé de choisir est déjà pris ou n'est pas autorisé",
                             error2: "Veuillez en choisir un nouveau"
                         });
                     }
