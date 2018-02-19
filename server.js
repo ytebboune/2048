@@ -63,23 +63,14 @@ app.get('/myaccount', userController.getProfil);
 
 app.post('/myaccount', userController.modifProfil);
 
-app.get('/admin', function(req, res){
-    if (req.session.rank == 1)
-        res.render('admin');
-    else
-        res.render('error',{
-        title: 'error',
-            error: "Vous n'avez pas les droits suffisants pour accéder à cette page",
-            error2: "Dommage !"
-    });
-});
+app.get('/admin', userController.getUsers);
 
 app.get('/disconnect', userController.disconnect);
 
 app.post('/create', userController.inscription);
 app.post('/loginVerif', userController.login);
 app.post('/NouveauRecord', classementController.NouveauRecord);
-
+app.post('/admin', userController.supprimerUsers)
 app.listen(1313);
 
 

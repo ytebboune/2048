@@ -1,7 +1,7 @@
 var user = require("../model/user.js");
 var sequelize = require('../db.js');
 var encrypt = require('../encrypt');
-
+var classement = require ("../model/classement.js")
 function isIdUnique(email, username) {
     return user.count({where: {$or: [{email: email}, {username: username}]}})
         .then(function (count) {
@@ -60,6 +60,11 @@ module.exports.inscription = function (req, res) {
                 password: password,
                 rank: rank
             }).then(function (users) {
+                classement.create({
+                    username : username,
+                    recordTemps : null,
+                    recordCoups : null
+                });
                 if (email == '' || password == '')
                     throw new Error('Veuillez renseigner les informations');
                 res.redirect('index');
@@ -201,6 +206,9 @@ module.exports.modifProfil = function (req, res) {
                     }
                 })
                 .then(function (user) {
+                    classement.update({
+                        username:username
+                    });
                     req.session.username = req.body.nomUser;
                     req.session.email = req.body.emailUser;
                     res.redirect('/index');
@@ -223,6 +231,9 @@ module.exports.modifProfil = function (req, res) {
                     }
                 })
                 .then(function (user) {
+                    classement.update({
+                        username:username
+                    });
                     res.redirect('/index');
                 }).catch(function (error) {
                 res.render('error', {
@@ -235,6 +246,7 @@ module.exports.modifProfil = function (req, res) {
         else if (req.body.emailUser == req.session.email) { // CAS : L'USER NE CHANGE PAS SON EMAIL
             isUsernameUnique(username).then(function (isUsernameUnique) {
                 if (isUsernameUnique) {
+
                     user.update({
                             username: req.body.nomUser,
                             password: newMdp
@@ -246,6 +258,14 @@ module.exports.modifProfil = function (req, res) {
                             }
                         })
                         .then(function (user) {
+                            classement.update({
+                                    username: req.body.nomUser,
+                                },
+                                {
+                                    where: {
+                                        id: req.session.id_user,
+                                    }
+                                });
                             req.session.username = req.body.nomUser;
                             res.redirect('/index');
                         }).catch(function (error) {
@@ -279,6 +299,9 @@ module.exports.modifProfil = function (req, res) {
                                 }
                             })
                             .then(function (user) {
+                                classement.update({
+                                    username:username
+                                });
                                 req.session.email = req.body.emailUser;
                                 res.redirect('/index');
                             }).catch(function (error) {
@@ -341,3 +364,38 @@ module.exports.modifProfil = function (req, res) {
 
         }
     }
+
+module.exports.getUsers = function(req, res){
+    if (req.session.rank == 1) {
+        sequelize.query("SELECT * FROM `users`", { type: sequelize.QueryTypes.SELECT})
+            .then(listeUsers=>{
+            res.render("admin", {listeUsers: listeUsers});
+    })
+
+    }
+    else
+        res.render('error',{
+            title: 'error',
+            error: "Vous n'avez pas les droits suffisants pour accéder à cette page",
+            error2: "Dommage !"
+        });
+}
+
+module.exports.supprimerUsers =  function(req, res){
+
+    user.destroy({
+        where: { id: req.body.idUsers }
+    }).then(user => {
+        classement.destroy({
+        where: { id: req.body.idUsers }
+    })
+    res.render('index');
+}).catch(function (error) {
+        res.render('error', {
+            title: 'error',
+            error: "Erreur lors de la suppression",
+            error2: "dommage"
+        });
+    });
+
+}

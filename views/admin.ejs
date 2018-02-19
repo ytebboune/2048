@@ -3,5 +3,31 @@
 
 <h1>Bienvenue dans le panel administrateur</h1>
 
+<table border="1">
+    <tr>
+        <td>Nom d'utilisateur</td>
+        <td>Email</td>
+        <td>Admin</td>
+    </tr>
+    <% listeUsers.forEach(function(users){ %>
+    <tr>
+       <td><%= users.username %></td>
+        <td><%= users.email %></td>
+        <% if (users.rank == 0){ %>
+            <td>Non</td>
+        <% } else { %>
+            <td>Oui</td>
+        <% } %>
+        <td><form method="POST">
+                <input type="hidden" name="idUsers" value="<%= users.id %>">
+                <p>
+                    <button style="width: 100%;" type="submit">Supprimer l'utilisateur</button>
+                </p>
+            </form>
+        </td>
+    </tr>
+</table>
+<% }); %>
+
 
 <% include foot %>
