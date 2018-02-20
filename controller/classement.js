@@ -59,11 +59,15 @@ module.exports.NouveauRecord = function (req, res) {
     var username = req.session.username;
     var tempsNew = req.body.temps;
     var coupsNew = req.body.coups;
-    console.log(tempsNew);
-    console.log(coupsNew);
-    console.log(username);
+    var recordCoups = req.session.recordCoups;
+    var recordTemps = req.session.recordDuree;
     
-    function isRecordTemps (tempsNew,username) {
+    console.log("nv tmp: " + tempsNew);
+    console.log("nv cp: " + coupsNew);
+    console.log("rc tmp: " + recordTemps);
+    console.log("rc cp: " + recordCoups);
+    
+    function isRecordTemps (tempsNew, username) {
         return classement.count({ where: { username: username }})
             .then(function(count){
                 if (count =! 0) {
@@ -82,15 +86,18 @@ module.exports.NouveauRecord = function (req, res) {
                 return false;
             });
     }
+
     
-    isRecordTemps(tempsNew, username).then(function(isUnique){
-        if (isUnique) {
+    if(recordTemps > tempsNew || recordTemps == null) {
+        isRecordTemps(tempsNew, username).then(function(isUnique){
+        if(isUnique) {
             classement.update({
-            recordDuree: tempsNew,
+                recordDuree: tempsNew,
             },
-            { where: {username: username}} )
-            .then(function (users) {})
-            .catch(function (error) {
+            { where: {username: username}
+            }).then(function (user) {
+                req.session.recordDuree = tempsNew;
+            }).catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
                     title: 'error',
@@ -105,16 +112,19 @@ module.exports.NouveauRecord = function (req, res) {
                 error: "Veuillez renseigner les informations d'inscriptions",
                 error2: "Retournez vous inscrire pour avoir un score !"
             });
-    })
-                                        
-    isRecordCoups(coupsNew, username).then(function(isUnique){
+        });
+    }
+    
+    if(recordCoups > coupsNew || recordCoups == null) {
+        isRecordCoups(coupsNew, username).then(function(isUnique){
         if (isUnique) {
             classement.update({
-            recordCoups: coupsNew,
+                recordCoups: coupsNew,
             },
-            { where: {username: username}} )
-            .then(function (users) {})
-            .catch(function (error) {
+            { where: {username: username}
+            }).then(function (user) {
+                req.session.recordCoups = coupsNew;
+            }).catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
                     title: 'error',
@@ -129,5 +139,7 @@ module.exports.NouveauRecord = function (req, res) {
                 error: "Veuillez renseigner les informations d'inscriptions",
                 error2: "Retournez vous inscrire pour avoir un score !"
             });
-    })
+        }); 
+    }                                  
+    
 };

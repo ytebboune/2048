@@ -2,6 +2,7 @@ var user = require("../model/user.js");
 var sequelize = require('../db.js');
 var encrypt = require('../encrypt');
 var classement = require ("../model/classement.js")
+
 function isIdUnique(email, username) {
     return user.count({where: {$or: [{email: email}, {username: username}]}})
         .then(function (count) {
@@ -104,19 +105,40 @@ module.exports.login = function (req, res) {
                 error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
             });
         } else {
-            console.log('', user);
             req.session.rank = user.dataValues.rank;
             req.session.username = user.dataValues.username;
             req.session.id_user = user.dataValues.id;
             req.session.email = user.dataValues.email;
-            res.redirect('index');
-
         }
     }).catch(function (error) {
         res.render('error', {
             title: 'error',
             error: 'Mauvais login/mdp',
             error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
+        });
+    });
+    
+    classement.findOne({
+        where: {
+            username: username
+        }
+    }).then(function (classement) {
+        if (!classement) {
+            res.render('error', {
+                title: 'error',
+                error: 'Mauvais login/mdp',
+                error2: "Reconnectez vous et saisissez une bonne cc fois pour toute des identifiants corrects !"
+            });
+        } else {
+            req.session.recordCoups = classement.dataValues.recordCoups;
+            req.session.recordDuree = classement.dataValues.recordDuree;
+            res.redirect('index');
+        }
+    }).catch(function (error) {
+        res.render('error', {
+            title: 'error',
+            error: 'Mauvais login/mdp',
+            error2: "Reconnectez vous et saisissez une bonne cou fois pour toute des identifiants corrects !"
         });
     });
 };
@@ -138,8 +160,6 @@ module.exports.getProfil = function (req, res) {
         }).then(function (user) {
             var nom = user.dataValues.username;
             var email = user.dataValues.email;
-
-            console.log(req.session.id);
 
             res.render('myaccount', {
                     nom: nom,
