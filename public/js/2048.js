@@ -206,8 +206,20 @@ function actionClavier(e) {
     if (debut == 0) {
         debut = new Date();
     }
+    
     if (victoire() == true) {
-        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " secondes.");
+        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " secondes en "+ coups +" coups.");
+        $.ajax({
+          type: "POST",
+          url: '/nouveauRecord',
+          data: {
+              temps: tempsEcoule,
+              coups: coups
+          },
+          success: retour => {
+              console.log(retour);
+          }
+        });
     }
 
     if (comparer()) {

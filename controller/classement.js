@@ -55,39 +55,42 @@ module.exports.classements = function (res) {
 }
 
 module.exports.NouveauRecord = function (req, res) {
+    
     var username = req.session.username;
     var tempsNew = req.body.temps;
     var coupsNew = req.body.coups;
-        
+    console.log(tempsNew);
+    console.log(coupsNew);
+    console.log(username);
+    
     function isRecordTemps (tempsNew,username) {
-        return classement.temps({ where: { username: username }})
-            .then(function(temps){
-                if (tempsNew > temps) {
-                    return false;
+        return classement.count({ where: { username: username }})
+            .then(function(count){
+                if (count =! 0) {
+                    return true;
                 }
-                return true;
+                return false;
             });
     }
+    
     function isRecordCoups (coupsNew, username) {
-        return classement.coups({ where: { username: username }})
-            .then(function(coups){
-                if (coupsNew > coups) {
-                    return false;
+        return classement.count({ where: { username: username }})
+            .then(function(count){
+                if (count != 0) {
+                    return true;
                 }
-                return true;
+                return false;
             });
     }
     
     isRecordTemps(tempsNew, username).then(function(isUnique){
         if (isUnique) {
             classement.update({
-            temps: tempsNew,
+            recordDuree: tempsNew,
             },
             { where: {username: username}} )
-            .then(function (users) {
-                res.redirect('index');
-
-            }).catch(function (error) {
+            .then(function (users) {})
+            .catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
                     title: 'error',
@@ -107,13 +110,11 @@ module.exports.NouveauRecord = function (req, res) {
     isRecordCoups(coupsNew, username).then(function(isUnique){
         if (isUnique) {
             classement.update({
-            coups: coupsNew,
+            recordCoups: coupsNew,
             },
             { where: {username: username}} )
-            .then(function (users) {
-                res.redirect('index');
-
-            }).catch(function (error) {
+            .then(function (users) {})
+            .catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
                     title: 'error',
