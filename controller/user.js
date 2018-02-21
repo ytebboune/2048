@@ -109,36 +109,13 @@ module.exports.login = function (req, res) {
             req.session.username = user.dataValues.username;
             req.session.id_user = user.dataValues.id;
             req.session.email = user.dataValues.email;
-        }
-    }).catch(function (error) {
-        res.render('error', {
-            title: 'error',
-            error: 'Mauvais login/mdp',
-            error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
-        });
-    });
-    
-    classement.findOne({
-        where: {
-            username: username
-        }
-    }).then(function (classement) {
-        if (!classement) {
-            res.render('error', {
-                title: 'error',
-                error: 'Mauvais login/mdp',
-                error2: "Reconnectez vous et saisissez une bonne cc fois pour toute des identifiants corrects !"
-            });
-        } else {
-            req.session.recordCoups = classement.dataValues.recordCoups;
-            req.session.recordDuree = classement.dataValues.recordDuree;
             res.redirect('index');
         }
     }).catch(function (error) {
         res.render('error', {
             title: 'error',
             error: 'Mauvais login/mdp',
-            error2: "Reconnectez vous et saisissez une bonne cou fois pour toute des identifiants corrects !"
+            error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
         });
     });
 };

@@ -37,7 +37,6 @@ module.exports.classements = function (res) {
             .then(meilleursJoueursHebdoCoups => {
                 resolve(meilleursJoueursHebdoCoups)
             })
-
     })
 
     Promise.all([p1, p2, p3, p4])
@@ -50,8 +49,6 @@ module.exports.classements = function (res) {
             console.log("Erreur récup des classement : " + err)
             res.redirect('index');
         })
-
-
 }
 
 module.exports.NouveauRecord = function (req, res) {
@@ -59,13 +56,8 @@ module.exports.NouveauRecord = function (req, res) {
     var username = req.session.username;
     var tempsNew = req.body.temps;
     var coupsNew = req.body.coups;
-    var recordCoups = req.session.recordCoups;
-    var recordTemps = req.session.recordDuree;
-    
-    console.log("nv tmp: " + tempsNew);
-    console.log("nv cp: " + coupsNew);
-    console.log("rc tmp: " + recordTemps);
-    console.log("rc cp: " + recordCoups);
+    var recordTemps;
+    var recordCoups;
     
     function isRecordTemps (tempsNew, username) {
         return classement.count({ where: { username: username }})
@@ -92,12 +84,23 @@ module.exports.NouveauRecord = function (req, res) {
             where: {
                 username : username}
             }).then(function (record){
-                return record.dataValues.recordDuree;
+                recordTemps = record.dataValues.recordDuree;
+                return recordTemps;
         })
-
     }
-    leRecordsTemps(req.session.username).then(function(record){
-    if(record > tempsNew || recordTemps == null) {
+    
+    function leRecordsCoups(username){
+        return classement.findOne({
+            where: {
+                username : username}
+            }).then(function (record){
+                recordCoups = record.dataValues.recordCoups;
+                return recordCoups;
+        })
+    }
+    
+    leRecordsTemps(username).then(function(record){
+    if(recordTemps > tempsNew || recordTemps == null) {
         isRecordTemps(tempsNew, username).then(function(isUnique){
         if(isUnique) {
             classement.update({
@@ -105,7 +108,7 @@ module.exports.NouveauRecord = function (req, res) {
             },
             { where: {username: username}
             }).then(function (user) {
-                req.session.recordDuree = tempsNew;
+                
             }).catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
@@ -122,8 +125,10 @@ module.exports.NouveauRecord = function (req, res) {
                 error2: "Retournez vous inscrire pour avoir un score !"
             });
         });
-    }});
+    }
+    });
     
+    leRecordsCoups(username).then(function(record){
     if(recordCoups > coupsNew || recordCoups == null) {
         isRecordCoups(coupsNew, username).then(function(isUnique){
         if (isUnique) {
@@ -132,7 +137,7 @@ module.exports.NouveauRecord = function (req, res) {
             },
             { where: {username: username}
             }).then(function (user) {
-                req.session.recordCoups = coupsNew;
+                
             }).catch(function (error) {
                 console.log('Error in Inserting Record', error);
                 res.render('error', {
@@ -149,6 +154,6 @@ module.exports.NouveauRecord = function (req, res) {
                 error2: "Retournez vous inscrire pour avoir un score !"
             });
         }); 
-    }                                  
-    
+    }
+    });
 };
