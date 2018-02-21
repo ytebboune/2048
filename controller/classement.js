@@ -87,8 +87,17 @@ module.exports.NouveauRecord = function (req, res) {
             });
     }
 
-    
-    if(recordTemps > tempsNew || recordTemps == null) {
+    function leRecordsTemps(username){
+        return classement.findOne({
+            where: {
+                username : username}
+            }).then(function (record){
+                return record.dataValues.recordDuree;
+        })
+
+    }
+    leRecordsTemps(req.session.username).then(function(record){
+    if(record > tempsNew || recordTemps == null) {
         isRecordTemps(tempsNew, username).then(function(isUnique){
         if(isUnique) {
             classement.update({
@@ -113,7 +122,7 @@ module.exports.NouveauRecord = function (req, res) {
                 error2: "Retournez vous inscrire pour avoir un score !"
             });
         });
-    }
+    }});
     
     if(recordCoups > coupsNew || recordCoups == null) {
         isRecordCoups(coupsNew, username).then(function(isUnique){
