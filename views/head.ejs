@@ -28,9 +28,9 @@
                 <a class="navbar-brand" href="/index">2048</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="/index">Home</a></li>
+                <li><a href="/index">Accueil</a></li>
                 <% if (!_username) { %>
-                <li ><a href="/login">Login</a></li>
+                <li ><a href="/login">Se connecter</a></li>
                 <% } %>
                 <% if (_username) { %>
                 <li class="myaccount"><a href="/myaccount">Mon Compte</a></li>
@@ -48,7 +48,7 @@
             </form>
             <% }  if (!_username) { %>
             <form method="get" action="/register">
-                <button type="submit" class="btn btn-danger navbar-btn">Register</button>
+                <button type="submit" class="btn btn-danger navbar-btn">Inscription</button>
             </form>
             <% } %>
         </div>

@@ -137,7 +137,7 @@ maCase.prototype.setBool = function (b) {
 function victoire() {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == "16") {
+            if (grille[i][j].getValeur() == "2048") {
                 if (tempsEcoule == 0) {
                     fin = new Date();
                     tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
