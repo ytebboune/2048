@@ -214,6 +214,7 @@ th, td {
 }
 
 .table100-head {
+  text-align:center;
   position: absolute;
   width: 100%;
   top: 0;

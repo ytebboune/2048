@@ -1,52 +1,50 @@
 <% var title = 'Page administrateur' %>
 <% include head %>
 <br/>
-<h1 style="text-align:center;" >Bienvenue dans le panel administrateur</h1>
+<h1 style="text-align:center;">Bienvenue dans le panel administrateur</h1>
+<br/>
 
-<div class="limiter" style="margin-top:5%;">
-		<div class="container">
-			<div class="wrap-table100">
-				<div style="color: black;" class="table100 ver3 m-b-110">
-					<div class="table100-head">
-<table>
-<thead>
-    <tr class="row100 head">
-        <th class="cell100 column1">Nom d'utilisateur</th>
-        <th class="cell100 column1">Email</th>
-        <th class="cell100 column1">Admin</th>
-        <th class="cell100 column1">Admin</th>
-    </tr>
-    </thead>
-    </table>
+<div class="table100 ver3 m-b-110">
+    <div class="table100-head">
+        <table>
+            <thead>
+            <tr class="row100 head">
+                <th class="cell100 column1">Nom d'utilisateur</th>
+                <th class="cell100 column2">Email</th>
+                <th class="cell100 column4">Admin</th>
+                <th class="cell100 column5">Action</th>
+            </tr>
+            </thead>
+        </table>
     </div>
+
     <div class="table100-body js-pscroll">
-    <table>
-<tbody>
-    <tr class="row100 body">
-    <% listeUsers.forEach(function(users){ %>
-
-       <td class="cell100 column1"><%= users.username %></td>
-        <td class="cell100 column1"><%= users.email %></td>
-        <% if (users.rank == 0){ %>
-            <td>Non</td>
-        <% } else { %>
-            <td class="cell100 column1">Oui</td>
-        <% } %>
-        <td class="cell100 column1"><form method="POST">
-                <input type="hidden" name="idUsers" value="<%= users.id %>">
-                <p>
-                    <button id="buttonForm" class="btn btn-default" xtype="submit">Supprimer l'utilisateur</button>
-                </p>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <table>
+            <tbody>
+            <% listeUsers.forEach(function(users){ %>
+            <tr class="row100 body">
+                <td class="cell100 column1"><%= users.username %></td>
+                <td class="cell100 column2"><%= users.email %></td>
+                <% if (users.rank == 0){ %>
+                <td class="cell100 column4">Non</td>
+                <% } else { %>
+                <td class="cell100 column4">Oui</td>
+                <% } %>
+                <td class="cell100 column5">
+                    <form method="POST">
+                        <input type="hidden" name="idUsers" value="<%= users.id %>">
+                        <p>
+                            <button id="buttonForm" class="btn btn-default" xtype="submit">Supprimer
+                                l'utilisateur
+                            </button>
+                        </p>
+                    </form>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
 </div>
-</div>
-</div></div></div>
-
-<% }); %>
-
 
 <% include foot %>
