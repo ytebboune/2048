@@ -4,8 +4,8 @@
 <section id="form"><!--form-->
   <div class="container">
       <div class="row">
-          <div class="signup-form"><!--sign up form-->
-              <h2 style="text-align : center;">Inscription</h2>
+          <div class="signup-form" id="formContour" style="margin-top:15%;"><!--sign up form-->
+              <h2 id="titleForm" style="text-align : center; margin-top: 50px;">Inscription</h2><br/>
               <form method="post" action="/create">
                   <input style="display: block; margin : auto; width:50%;" type="email" name="email" placeholder="Votre email" autofocus required/>
                   <br/>
@@ -13,8 +13,8 @@
                   <br/>
 
                   <input style="display: block; margin : auto; width:50%;" type="password" name="password" pattern="[A-Za-z0-9]{6,8}" placeholder="Votre mot de passe" required/>
-                  <br/>
-                  <button style="display: block; margin : auto; width:20%;" type="submit" value="Register" class="btn btn-default">S'enregistrer</button>
+                  <br/> <br/>
+                  <button id="buttonForm" style="display: block; margin : auto; margin-bottom: 50px; width:20%;" type="submit" value="Register" class="btn btn-default">S'enregistrer</button>
               </form>
           </div><!--/sign up form-->
       </div>

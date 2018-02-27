@@ -118,10 +118,78 @@ a
     background-color: #bfc5c5;
 }
 
-.nav navbar-nav > a{
+#themeHeaderText{
+    color: #585555;
+}
+
+.nav > .navbar-bar li a{
+    color: black;
+}
+
+
+.case2{
+    background-color: #444;
+    color: #636060;
+}
+
+.case4{
+    background-color: #555;
+    color: #636060;
+}
+
+.case8{
+    background-color: #666;
+    color: #636060;
+}
+
+.case16{
+    background-color: #777;
+    color: #636060;
+}
+
+.case32{
+    background-color: #888;
+    color: #333;
+}
+
+.case64{
+    background-color: #999;
+    color: #111;
+}
+
+.case128{
+    background-color: #aaa;
+    color: black;
+}
+
+.case256{
+    background-color: #bbb;
+    color: black;
+}
+
+.case512{
+    background-color: #ccc;
+    color: black;
+}
+
+.case1024{
+    background-color: #ddd;
+    color: black;
+}
+
+.case2048{
+    background-color: #eee;
+    color: black;
+}
+
+.default{
+    background-color: #bfbfbf;
 
 }
-/*css du 2048 le jeu*/
+
+#fondPrincipale{
+    background-color: #eeeeee;
+}
 
 #jeu{
     position: absolute;
@@ -138,6 +206,7 @@ div {
     margin-bottom: 15px;
 }
 .case {
+    color: #e7e7e7;
     border-style:solid;
     border-width:1px;
     border-color:black;
@@ -171,5 +240,51 @@ div {
     margin-right: 10px;
     float: left;
 }
+
+.btn_2048 > a{
+    color:black;
+}
+
+.btn_2048 > a:hover{
+    color:black;
+}
+
+/*Formulaire*/
+
+#buttonForm{
+    background-color: #d4d4d4;
+    color: black;
+    border:1px solid black;
+}
+
+#formContour{
+    border:5px double #6d6d6d;
+}
+
+#titleForm{
+    color: #404040;
+}
+
+form > input {
+    background-color: #fdfdfd;
+    border: 2px solid #6d6d6d;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/*Page d'Erreur*/
+
+#error1{
+    text-decoration: underline;
+    text-align:center;
+    color:#6d6d6d;
+}
+
+#error2{
+    font-size:20px;
+    text-align: center;
+    color: #4f4f4f;
+}
+
 
 .videold { 	background-color:#00008B; z-index:0; border:none}

@@ -13,8 +13,11 @@
     <script type="text/javascript" src="js/2048.js"></script>
     <link href="css/style.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
    <script src="js/bootstrap.min.js"></script>
+   	<link rel="stylesheet" type="text/css" href="css/util.css">
+   	<link rel="stylesheet" type="text/css" href="css/tableMain.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!--    <link href="css/style.css" rel="stylesheet">-->
@@ -25,21 +28,21 @@
     <nav id="nav-header" class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/index">2048</a>
+                <a class="navbar-brand" id="themeHeaderText" href="/index">2048</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="/index">Accueil</a></li>
+                <li><a id="themeHeaderText" href="/index">Accueil</a></li>
                 <% if (!_username) { %>
-                <li ><a href="/login">Se connecter</a></li>
+                <li ><a id="themeHeaderText" href="/login">Se connecter</a></li>
                 <% } %>
                 <% if (_username) { %>
-                <li class="myaccount"><a href="/myaccount">Mon Compte</a></li>
+                <li class="myaccount"><a id="themeHeaderText" href="/myaccount">Mon Compte</a></li>
                 <% } %>
                 <% if (_username) { %>
-                <li class="classement"><a href="/classement">Classement</a></li>
+                <li class="classement"><a id="themeHeaderText" href="/classement">Classement</a></li>
                 <% } %>
                 <% if (_username) { %>
-                <li class="disconnect"><a href="/disconnect">Déconnexion</a></li>
+                <li class="disconnect"><a id="themeHeaderText" href="/disconnect">Déconnexion</a></li>
                 <% } %>
             </ul>
             <% if (_rank == 1 ) { %>
@@ -54,4 +57,4 @@
         </div>
     </nav>
 </header>
-<body>
+<body id="fondPrincipale">

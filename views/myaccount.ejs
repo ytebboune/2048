@@ -1,28 +1,27 @@
 <% var title = 'Mon Compte' %>
 <% include head %>
+<br/>
+<h1 style="text-align:center;" id="titleForm">Bienvenue sur votre panel utilisateur</h1>
+<br/><br/><br/><br/>
+<div class="container">
+<div class="login-form"><!--login form-->
+<form method="POST" id="formContour">
+    <h4 for="name" style="text-align : center; margin-top: 30px;"> Nom d'utilisateur : </h4>
+    <input style="display: block; margin : auto; width:40%;" type="text" name="nomUser" id="name" value="<%= nom %>"/>
+    <br/>
+    <h4 for="Email" style="text-align : center;"> Email : </h4>
+    <input style="display: block; margin : auto; width:40%; text-align:center;" type="text" id="Email" name="emailUser" value="<%= email %>"/>
+    <br/>
+    <h4 for="ancienMdp" style="text-align : center;"> Ancien mot de passe : </h4>
+    <input style="display: block; margin : auto; width:40%; text-align:center;" type="password" id="ancienMdp" name="ancienMdp"/>
+    <br/>
+    <h4 for="newMdp" style="text-align : center;">Nouveau mot de passe :</h4>
+    <input style="display: block; margin : auto; width:40%; text-align:center;" type="password" id="newMdp" name="newMdp"/>
+    <br/><br/>
+    <button class="btn btn-default" id="buttonForm" style="display: block; margin : auto; margin-bottom: 30px; width:40%; text-align:center;" type="submit">Changer les informations</button>
 
-<h1>Bienvenue sur votre panel utilisateur</h1>
-
-<form method="POST">
-	<p>
-	    <label for="name">Nom : </label>
-		<input type="text" name="nomUser" id="name" value="<%= nom %>">
-	</p>
-	<p>
-	    <label for="Email">Email : </label>
-		<input type="text" id="Email" name="emailUser" value="<%= email %>">
-	</p>
-	<p>
-		<label for="ancienMdp">Ancien mot de passe</label>
-		<input type="password" id="ancienMdp" name="ancienMdp">
-	</p>
-	<p>
-		<label for="newMdp">Nouveau mot de passe</label>
-		<input type="password" id="newMdp" name="newMdp">
-	</p>
-	<p>
-		<button type="submit">Modifier le profil</button>
-	</p>	
 </form>
+</div>
+</div>
 
 <% include foot %>

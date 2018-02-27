@@ -57,40 +57,41 @@ function afficherGrille() {
             listCase[indice].textContent = grille[i][j].getValeur();
             switch (listCase[indice].textContent) {
                 case "2":
-                    listCase[indice].style.backgroundColor = "#1abc9c";
+                    listCase[indice].classList.add("case2");
                     break;
                 case "4":
-                    listCase[indice].style.backgroundColor = "#16a085";
+                    listCase[indice].classList.add("case4");
                     break;
                 case "8":
-                    listCase[indice].style.backgroundColor = "#2ecc71";
+                    listCase[indice].classList.add("case8");
                     break;
                 case "16":
-                    listCase[indice].style.backgroundColor = "#27ae60";
+                    listCase[indice].classList.add("case16");
                     break;
                 case "32":
-                    listCase[indice].style.backgroundColor = "#3498db";
+                    listCase[indice].classList.add("case32");
                     break;
                 case "64":
-                    listCase[indice].style.backgroundColor = "#2980b9";
+                    listCase[indice].classList.add("case64");
                     break;
                 case "128":
-                    listCase[indice].style.backgroundColor = "#9b59b6";
+                    listCase[indice].classList.add("case128");
                     break;
                 case "256":
-                    listCase[indice].style.backgroundColor = "#8e44ad";
+                    listCase[indice].classList.add("case256");
                     break;
                 case "512":
-                    listCase[indice].style.backgroundColor = "#f1c40f";
+                    listCase[indice].classList.add("case512");
                     break;
                 case "1024":
-                    listCase[indice].style.backgroundColor = "#f39c12";
+                    listCase[indice].classList.add("case1024");
                     break;
                 case "2048":
-                    listCase[indice].style.backgroundColor = "#c0392b";
+                    listCase[indice].classList.add("case2048");
                     break;
                 default:
-                    listCase[indice].style.backgroundColor = "#ecf0f1";
+                    listCase[indice].classList.add("default");
+
             }
             indice++;
         }
@@ -406,7 +407,6 @@ function isIdUnique (username) {
 function changeCSS() {
     var linkCSS = document.getElementsByTagName("link")[0];
     checked = $('.toggle.btn.btn-primary');
-
     if (checked.length > 0) {
         linkCSS.href = "css/style.css";
         setCookie(theme, 'light', 3000)
@@ -415,6 +415,7 @@ function changeCSS() {
         linkCSS.href = "css/style2.css";
         setCookie(theme, 'dark', 3000)
     }
+
     return checked.length;
 }
 function setCookie(cname, cvalue, exdays) {

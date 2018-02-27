@@ -123,6 +123,70 @@ a
 
 /*css du 2048 le jeu*/
 
+.case2{
+    background-color: #bbb;
+    color: #636060;
+}
+
+.case4{
+    background-color: #aaa;
+    color: #636060;
+}
+
+.case8{
+    background-color: #999;
+    color: #636060;
+}
+
+.case16{
+    background-color: #888;
+    color: #636060;
+}
+
+.case32{
+    background-color: #777;
+    color: #333;
+}
+
+.case64{
+    background-color: #666;
+    color: #111;
+}
+
+.case128{
+    background-color: #555;
+    color: black;
+}
+
+.case256{
+    background-color: #444;
+    color: black;
+}
+
+.case512{
+    background-color: #333;
+    color: black;
+}
+
+.case1024{
+    background-color: #222;
+    color: black;
+}
+
+.case2048{
+    background-color: #111;
+    color: black;
+}
+
+.default{
+    background-color: #474747;
+
+}
+
+#fondPrincipale{
+    background-color: #787878;
+}
+
 #jeu{
     position: absolute;
     z-index: 1;
@@ -163,10 +227,54 @@ div {
     width: 15em;
     border: 1px solid #333;
     padding: 8px 12px;
-    background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
+    background-image: linear-gradient(180deg, #000, #404040 40%, #636363);
     margin-top: 10px;
     margin-right: 10px;
     float: left;
+}
+
+.btn_2048 > a{
+    color:white;
+}
+
+.btn_2048 > a:hover{
+    color:white;
+}
+
+/*Formulaire*/
+#buttonForm{
+    background-color: #303030;
+    color: white;
+}
+
+#formContour{
+    border:5px double black;
+}
+
+#titleForm{
+    color: black;
+}
+
+form > input {
+    background-color: #d4d4d4;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+/*Page d'Erreur*/
+
+#error1{
+    text-decoration: underline;
+    text-align:center;
+    color:black;
+}
+
+#error2{
+    font-size:20px;
+    text-align: center;
+    color: #383737;
 }
 
 .videold { 	background-color:#00008B; z-index:0; border:none}
