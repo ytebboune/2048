@@ -1,119 +1,189 @@
-<% var title = 'Classement';%>
-
+<% var title = 'Classement'; %>
 <% include head %>
-
-
-    <div class="span5">
-        <h4>Classement des meilleurs joueurs en temps</h4>
-        <table border="1">
-            <% classements[0].forEach(function(joueur){ %>
-                <tr>
-                    <% if(joueur.recordCoups != null){ %>
-                        <td>
+<br>
+<h3 style="text-align:center;">Tout les classements sont disponibles ici !</h3>
+<br><br>
+<div class="limiter">
+    <div class="container" style="width:50%;">
+        <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+                <table>
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; font-size:20px;">Classement globale par
+                            temps
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table100-body js-pscroll">
+                <table>
+                    <tbody>
+                    <% classements[0].forEach(function(joueur){ %>
+                    <tr class="row100 body">
+                        <% if(joueur.recordCoups != null){ %>
+                        <td class="cell100 column1">
                             <%= joueur.username %>
                         </td>
-                        <td>
+                        <td class="cell100 column2">
                             <%= joueur.recordDuree %> secondes
                         </td>
                         <!--
                         <td>
                             <form method="post" action="/supprimerDuClassement">
-                                <input type="hidden" value="<%=joueur.username%>">
+                                <input type="hidden" value="<%= joueur.username %>">
                                 <p>
                                     <input type="submit" value="Supprimer pour triche">
                                 </p>
                             </form>
                         </td>
                         -->
-                    <% } %>
-                </tr>
-            <% }); %>
-        </table>
+                        <% } %>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="span5">
-        <h4>Classement des meilleurs joueurs en coups</h4>
-        <table border="1">
-            <% classements[1].forEach(function(joueur){ %>
-                <tr>
-                    <% if(joueur.recordCoups != null){ %>
-                        <td>
+<div class="limiter">
+    <div class="container" style="width:50%;">
+        <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+                <table>
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; font-size:20px;">Classement globale par coups</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table100-body js-pscroll">
+                <table>
+                    <tbody>
+                    <% classements[1].forEach(function(joueur){ %>
+                    <tr class="row100 body">
+                        <% if(joueur.recordCoups != null){ %>
+                        <td class="cell100 column1">
                             <%= joueur.username %>
                         </td>
-                        <td>
+                        <td class="cell100 column2">
                             <%= joueur.recordCoups %> coups
                         </td>
                         <!--
                         <td>
                             <form method="post" action="/supprimerDuClassement">
-                                <input type="hidden" value="<%=joueur.username%>">
+                                <input type="hidden" value="<%= joueur.username %>">
                                 <p>
                                     <input type="submit" value="Supprimer pour triche">
                                 </p>
                             </form>
                         </td>
                         -->
-                    <% } %>
-                </tr>
-            <% }); %>
-        </table>
+                        <% } %>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="span5">
-        <h4>Classement des meilleurs joueurs hebdomadaires en temps</h4>
-        <table border="1">
-            <% classements[2].forEach(function(joueur){ %>
-                <tr>
-                    <% if(joueur.recordCoups != null){ %>
-                        <td>
+
+<div class="limiter">
+    <div class="container" style="width:50%;">
+        <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+                <table>
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; font-size:20px;">Classement hebdomadaire
+                            par temps
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table100-body js-pscroll">
+                <table>
+                    <tbody>
+                    <% classements[2].forEach(function(joueur){ %>
+                    <tr class="row100 body">
+                        <% if(joueur.recordCoups != null){ %>
+                        <td class="cell100 column1">
                             <%= joueur.username %>
                         </td>
-                        <td>
+                        <td class="cell100 column2">
                             <%= joueur.recordDuree %> secondes
                         </td>
                         <!--
                         <td>
                             <form method="post" action="/supprimerDuClassement">
-                                <input type="hidden" value="<%=joueur.username%>">
+                                <input type="hidden" value="<%= joueur.username %>">
                                 <p>
                                     <input type="submit" value="Supprimer pour triche">
                                 </p>
                             </form>
                         </td>
                         -->
-                    <% } %>
-                </tr>
-            <% }); %>
-        </table>
+                        <% } %>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="span5">
-        <h4>Classement des meilleurs joueurs hebdomadaires en coups</h4>
-        <table border="1">
-            <% classements[3].forEach(function(joueur){ %>
-                <tr>
-                    <% if(joueur.recordCoups != null){ %>
-                        <td>
+<div class="limiter">
+    <div class="container" style="width:50%;">
+        <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+                <table>
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; font-size:20px;">Classement hebdomadaire
+                            par coups
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table100-body js-pscroll">
+                <table>
+                    <tbody>
+                    <% classements[3].forEach(function(joueur){ %>
+                    <tr class="row100 body">
+                        <% if(joueur.recordCoups != null){ %>
+                        <td class="cell100 column1">
                             <%= joueur.username %>
                         </td>
-                        <td>
+                        <td class="cell100 column2">
                             <%= joueur.recordCoups %> coups
                         </td>
                         <!--
                         <td>
                             <form method="post" action="/supprimerDuClassement">
-                                <input type="hidden" value="<%=joueur.username%>">
+                                <input type="hidden" value="<%= joueur.username %>">
                                 <p>
                                     <input type="submit" value="Supprimer pour triche">
                                 </p>
                             </form>
                         </td>
                         -->
-                    <% } %>
-                </tr>
-            <% }); %>
-        </table>
+                        <% } %>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-<% include foot %>
+</div>
+                <% include foot %>
 

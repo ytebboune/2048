@@ -58,41 +58,82 @@ function afficherGrille() {
             switch (listCase[indice].textContent) {
                 case "2":
                     listCase[indice].classList.add("case2");
+                    if(listCase[indice].classList.contains("default" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case2";
+/*
+                    listCase[indice].classList.remove("default");
+*/
+
+/*                    else if(listCase[indice].classList.contains("case4"))
+                        listCase[indice].classList.remove("case4");
+                    else if(listCase[indice].classList.contains("case8"))
+                        listCase[indice].classList.remove("case8");
+                    else if(listCase[indice].classList.contains("case16"))
+                        listCase[indice].classList.remove("case16");
+                    else if(listCase[indice].classList.contains("case32"))
+                        listCase[indice].classList.remove("case32");*/
                     break;
                 case "4":
                     listCase[indice].classList.add("case4");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case4";
+
                     break;
                 case "8":
                     listCase[indice].classList.add("case8");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case8";
+
                     break;
                 case "16":
                     listCase[indice].classList.add("case16");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case16";
+
                     break;
                 case "32":
                     listCase[indice].classList.add("case32");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case32";
+
                     break;
                 case "64":
                     listCase[indice].classList.add("case64");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case64";
+
                     break;
                 case "128":
                     listCase[indice].classList.add("case128");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case128";
                     break;
                 case "256":
                     listCase[indice].classList.add("case256");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case256";
                     break;
                 case "512":
                     listCase[indice].classList.add("case512");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case512";
                     break;
                 case "1024":
                     listCase[indice].classList.add("case1024");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case1024";
                     break;
                 case "2048":
                     listCase[indice].classList.add("case2048");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case case2048";
                     break;
                 default:
                     listCase[indice].classList.add("default");
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                        listCase[indice].className = "case default";
 
-            }
+                        }
             indice++;
         }
     }
