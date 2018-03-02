@@ -1,10 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+
 var app = express();
 var session = require('express-session');
 var userController = require("./controller/user.js");
 var classementController = require("./controller/classement.js");
-
 // config
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');

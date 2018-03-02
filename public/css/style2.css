@@ -329,3 +329,37 @@ tbody > tr {
 
 
 .videold { 	background-color:#00008B; z-index:0; border:none}
+
+.message {
+    margin-top:40%;
+    margin-bottom:40%;
+    margin-left:8%;
+    margin-right:8%;
+    text-align:center;
+    position:absolute;
+    padding : 3%;
+    background-color:#5e5e5e;
+    color:#eeeeee;
+    border:3px solid #eeeeee;
+    border-radius:6px;
+    font-family: 'Lato', sans-serif;
+
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}

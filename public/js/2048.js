@@ -1,4 +1,5 @@
 /*<![CDATA[*/
+
 var grille;
 var bool = false;
 var oldGrille;
@@ -58,11 +59,13 @@ function afficherGrille() {
             switch (listCase[indice].textContent) {
                 case "2":
                     listCase[indice].classList.add("case2");
-                    if(listCase[indice].classList.contains("default" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
+                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case2";
-/*
-                    listCase[indice].classList.remove("default");
-*/
+                    listCase[indice].classList.add("case2");
+
+                    /*
+                                        listCase[indice].classList.remove("default");
+                    */
 
 /*                    else if(listCase[indice].classList.contains("case4"))
                         listCase[indice].classList.remove("case4");
@@ -77,18 +80,21 @@ function afficherGrille() {
                     listCase[indice].classList.add("case4");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case4";
+                    listCase[indice].classList.add("case4");
 
                     break;
                 case "8":
                     listCase[indice].classList.add("case8");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case8";
+                    listCase[indice].classList.add("case8");
 
                     break;
                 case "16":
                     listCase[indice].classList.add("case16");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case16";
+                    listCase[indice].classList.add("case16");
 
                     break;
                 case "32":
@@ -179,7 +185,7 @@ maCase.prototype.setBool = function (b) {
 function victoire() {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == "2048") {
+            if (grille[i][j].getValeur() == "16") {
                 if (tempsEcoule == 0) {
                     fin = new Date();
                     tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
@@ -216,6 +222,7 @@ function defaite() {
 
 function actionClavier(e) {
     if (defaite() == true) {
+        $(".message").show();
         $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
     }
     
@@ -250,7 +257,9 @@ function actionClavier(e) {
     }
     
     if (victoire() == true) {
-        $(".message").html("Vous avez finis le jeu en " + tempsEcoule + " secondes en "+ coups +" coups.");
+
+        $(".message").slideDown();
+        $(".message").html("Vous avez fini le jeu en " + tempsEcoule + " secondes en "+ coups +" coups.");
         $.ajax({
           type: "POST",
           url: '/nouveauRecord',
@@ -491,4 +500,5 @@ $(document).ready(function(){
     else {
         linkCSS.href = "css/style.css";
     }
+    $('.message').hide();
 });
