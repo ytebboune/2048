@@ -33,11 +33,14 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function(req, res){
-    res.redirect('index');
+    res.render('index');
 });
 
 app.get('/login', function(req, res){
-    res.render('login');
+    if(!req.session.username)
+        res.render('login');
+    else
+        res.render('index');
 });
 
 app.get('/index', function(req, res){
@@ -45,7 +48,10 @@ app.get('/index', function(req, res){
 });
 
 app.get('/register', function(req, res){
-    res.render('register');
+    if(!req.session.username)
+        res.render('register');
+    else
+        res.render('index');
 });
 
 app.get('/classement', function(req, res){
@@ -55,7 +61,7 @@ app.get('/classement', function(req, res){
         res.render('error',{
             title: 'error',
             error: "Vous n'êtes pas connecté",
-            error2: "dommage"
+            error2: "Veuillez vous connecter"
         });
 });
 
