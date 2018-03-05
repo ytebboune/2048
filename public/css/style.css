@@ -231,7 +231,7 @@ div {
 #btn_jeu{
     position: absolute;
     z-index: 1;
-    top:80%;
+    top:75%;
     left:40%;
 }
 .btn_2048 {
@@ -239,7 +239,6 @@ div {
     border: 1px solid #333;
     padding: 8px 12px;
     background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
-    margin-top: 10px;
     margin-right: 10px;
     float: left;
 }

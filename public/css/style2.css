@@ -220,7 +220,7 @@ div {
 #btn_jeu{
     position: absolute;
     z-index: 1;
-    top:80%;
+    top:75%;
     left:40%;
 }
 .btn_2048 {

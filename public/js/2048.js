@@ -225,10 +225,10 @@ function actionClavier(e) {
         $(".message").show();
         $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
     }
-    
+
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
-    
+
     if (victoire() == false) {
         if (key == 38) {
             deplacementVersHaut();
@@ -248,14 +248,14 @@ function actionClavier(e) {
         } else if (key == 39) {
             deplacementVersDroite();
             fusionerVersDroite();
-            deplacementVersDroite();   
+            deplacementVersDroite();
         }
     }
-    
+
     if (debut == 0) {
         debut = new Date();
     }
-    
+
     if (victoire() == true) {
 
         $(".message").slideDown();
@@ -489,6 +489,28 @@ function gcookie(cname) {
     }
     return "";
 }
+
+
+
+
+function ConfirmerSuppression() {
+
+    $.confirm({
+        title: 'Supprimer utilisateur',
+        content: 'Êtes vous sûr de vouloir supprimer l\'utilisateur ?',
+        buttons: {
+            Oui : function () {
+                $("#deleteUser").submit();
+            },
+            Non: {
+                text: 'Non'
+            }
+        }
+    });
+}
+
+
+
 $(document).ready(function(){
     var css = 0;
     var linkCSS = document.getElementsByTagName("link")[0];
