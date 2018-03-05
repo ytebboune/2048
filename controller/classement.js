@@ -5,7 +5,7 @@ var encrypt = require('../encrypt');
 
 module.exports.classements = function (res) {
     var p1 = new Promise((resolve, reject) => {
-        sequelize.query("SELECT * FROM classement ORDER BY recordDuree LIMIT 10; ", {
+        sequelize.query("SELECT * FROM classement ORDER BY recordDuree ASC LIMIT 10; ", {
                 type: sequelize.QueryTypes.SELECT
             })
             .then(meilleursJoueursGeneralDuree => {
@@ -23,7 +23,7 @@ module.exports.classements = function (res) {
     })
 
     var p3 = new Promise((resolve, reject) => {
-        sequelize.query("SELECT * FROM classement WHERE sys_modified BETWEEN (NOW()-INTERVAL 7 DAY) AND NOW() ORDER BY recordDuree LIMIT 10; ", {
+        sequelize.query("SELECT * FROM classement WHERE sys_modified BETWEEN (NOW()-INTERVAL 7 DAY) AND NOW() ORDER BY recordDuree ASC LIMIT 10; ", {
                 type: sequelize.QueryTypes.SELECT
             })
             .then(meilleursJoueursHebdoDuree => {
