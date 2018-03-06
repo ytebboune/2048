@@ -127,7 +127,7 @@ module.exports.getProfil = function (req, res) {
             where: {
                 id: req.session.id_user
             }
-        }).then(function (user) {
+        }).then (function (user) {
             var nom = user.dataValues.username;
             var email = user.dataValues.email;
 
@@ -138,8 +138,7 @@ module.exports.getProfil = function (req, res) {
             );
         });
     } else
-        res.render('error', {
-            title: 'error',
+        res.render('myaccount', {
             error: "Vous n'êtes pas connecté",
             error2: "dommage"
         });
@@ -153,19 +152,19 @@ module.exports.modifProfil = function (req, res) {
     var newMdp = req.body.newMdp;
 
     if ((req.body.newMdp == '' || req.body.newMdp == oldMdp) && req.body.emailUser == req.session.email && req.body.nomUser == req.session.username){
-        res.render('error', {
-            title: 'error',
+        res.render('myaccount', {
+            nom: req.session.username,
+            email: req.session.email,
             error: "Vous n'avez rien changé",
-            error2: "Veuillez modifier un élément du profil"
         });
         return;
     }
 
     if (req.body.ancienMdp == '') {
-        res.render('error', {
-            title: 'error',
+        res.render('myaccount', {
+            nom: req.session.username,
+            email: req.session.email,
             error: "Vous n'avez pas renseigné votre ancien mot de passe",
-            error2: "dommage"
         });
         return;
     }
@@ -277,10 +276,10 @@ module.exports.modifProfil = function (req, res) {
                     })
                 }
                 else {
-                    res.render('error', {
-                        title: 'error',
+                    res.render('myaccount', {
+                        nom: req.session.username,
+                        email: req.session.email,
                         error: "L'Username que vous avez décidé de choisir est déjà pris ou n'est pas autorisé ",
-                        error2: "Veuillez en choisir un nouveau"
                     });
                 }
             })
@@ -319,10 +318,10 @@ module.exports.modifProfil = function (req, res) {
                     }
 
                     else {
-                        res.render('error', {
-                            title: 'error',
+                        res.render('myaccount', {
+                            nom: req.session.username,
+                            email: req.session.email,
                             error: "L'Email que vous avez décidé de choisir est déjà pris ou n'est pas autorisé",
-                            error2: "Veuillez en choisir un nouveau"
                         });
                     }
 
@@ -331,10 +330,10 @@ module.exports.modifProfil = function (req, res) {
         }
 
         else {
-            res.render('error', {
-                title: 'error',
+            res.render('myaccount', {
+                nom: req.session.username,
+                email: req.session.email,
                 error: "Vous n'avez rien changé",
-                error2: "Veuillez modifier un élément du profil"
             });
         }
     });
@@ -364,7 +363,7 @@ module.exports.modifProfil = function (req, res) {
             res.render('error', {
                 title: 'error',
                 error: "Le mot de passe doit contenir au moins 6 caractères",
-                error2: "dommage"
+                error2: "dommage",
             });
 
         }

@@ -23,5 +23,9 @@
 </form>
 </div>
 </div>
-
+<% if (typeof error != 'undefined') { %>
+<div class="error"><img width="25px" height="25px" style="margin-right: 30px;" src="../open-iconic-master/svg/warning.svg">
+    <%= error %>
+</div>
+<% } %>
 <% include foot %>
