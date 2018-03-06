@@ -14,11 +14,18 @@
 
                   <input style="display: block; margin : auto; width:50%;" type="password" name="password" pattern="[A-Za-z0-9]{6,8}" placeholder="Votre mot de passe" required/>
                   <br/> <br/>
+                  <span class="oi oi-audio-spectrum"></span>
                   <button id="buttonForm" style="display: block; margin : auto; margin-bottom: 50px; width:20%;" type="submit" value="Register" class="btn btn-default">S'enregistrer</button>
               </form>
           </div><!--/sign up form-->
       </div>
   </div>
 </section><!--/form-->
+<% if (typeof error != 'undefined') { %>
+<div class="error"><img width="25px" height="25px" style="margin-right: 30px;" src="../open-iconic-master/svg/warning.svg">
+        <%= error %>
+</div>
+<% } %>
+
 
 <% include foot %>

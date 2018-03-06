@@ -278,6 +278,15 @@ tbody > tr {
     border-bottom: 1px solid black;
     border-top: 1px solid black;"
 }
+
+
+/*erreur*/
+
+.error{
+    margin-top : 500px;
+    color: blue;
+}
+
 /*Page d'Erreur*/
 
 #error1{

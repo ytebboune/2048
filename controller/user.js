@@ -68,22 +68,18 @@ module.exports.inscription = function (req, res) {
                 });
                 if (email == '' || password == '')
                     throw new Error('Veuillez renseigner les informations');
-                res.redirect('index');
+                res.redirect('login');
 
             }).catch(function (error) {
                 console.log('Error in Inserting Record', error);
-                res.render('error', {
-                    title: 'error',
-                    error: "Veuillez renseigner les informations d'inscriptions",
-                    error2: "Retournez vous inscrire pour saisir une bonne fois pour toute des identifiants corrects !"
+                res.render('register', {
+                    error: "Veuillez renseigner les informations d'inscriptions"
                 });
             });
         }
         else
-            res.render('error', {
-                title: 'error',
-                error: "Utilisateur déjà existant",
-                error2: "Retournez vous inscrire pour saisir une bonne fois pour toute des identifiants corrects !"
+            res.render('register', {
+                error: "Vous avez renseigné un e-mail déjà existant ou un username déjà existant !"
             });
     })
 };
@@ -99,10 +95,9 @@ module.exports.login = function (req, res) {
         }
     }).then(function (user) {
         if (!user) {
-            res.render('error', {
-                title: 'error',
-                error: 'Mauvais login/mdp',
-                error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
+            res.render('login', {
+                error: 'Vous avez entré un mauvais login/mot de passe, veuillez réessayer !',
+
             });
         } else {
             req.session.rank = user.dataValues.rank;
@@ -112,10 +107,8 @@ module.exports.login = function (req, res) {
             res.redirect('index');
         }
     }).catch(function (error) {
-        res.render('error', {
-            title: 'error',
-            error: 'Mauvais login/mdp',
-            error2: "Reconnectez vous et saisissez une bonne fois pour toute des identifiants corrects !"
+        res.render('login', {
+            error: 'Vous avez entré un mauvais login/mot de passe, veuillez réessayer !',
         });
     });
 };
@@ -166,7 +159,7 @@ module.exports.modifProfil = function (req, res) {
             error2: "Veuillez modifier un élément du profil"
         });
         return;
-}
+    }
 
     if (req.body.ancienMdp == '') {
         res.render('error', {

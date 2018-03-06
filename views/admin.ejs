@@ -36,9 +36,11 @@
                         <td class="cell100 column5">
                             <form method="POST" name="deleteUser" id="deleteUser">
                                 <input type="hidden" name="idUsers" value="<%= users.id %>">
+                                <% if(users.rank == 0) {%>
                                 <p>
                                     <button type="button" id="buttonForm" class="btn btn-default" data-toggle="confirmation" onclick="ConfirmerSuppression(); return false;" data-placement="top">Supprimer l'utilisateur</button>
                                 </p>
+                                <% } %>
                             </form>
                         </td>
                     </tr>
