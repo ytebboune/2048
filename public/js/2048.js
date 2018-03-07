@@ -221,6 +221,7 @@ function defaite() {
 }
 
 function actionClavier(e) {
+
     if (defaite() == true) {
         $(".message").show();
         $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
@@ -228,6 +229,13 @@ function actionClavier(e) {
 
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
+
+    if(key==38 || key==40 || key==37 || key==39){
+        var coups2 = coups+1;
+        $(".nbCoups").html("Nombre de coups: " + coups2);
+    } else
+        $(".nbCoups").html("Nombre de coups: " + coups);
+
 
     if (victoire() == false) {
         if (key == 38) {
