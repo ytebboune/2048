@@ -47,6 +47,10 @@ app.get('/index', function(req, res){
     res.render('index');
 });
 
+app.get('/indexTetris', function(req, res){
+    res.render('indexTetris');
+});
+
 app.get('/register', function(req, res){
     if(!req.session.username)
         res.render('register');
