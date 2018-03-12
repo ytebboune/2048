@@ -20,7 +20,7 @@ function init() {
     }
     newValeur();
     newValeur();
-    coups = 0;
+    coups = 1;
 
     oldGrille = new Array(4);
     for (i = 0; i < 4; i++) {
@@ -231,8 +231,8 @@ function actionClavier(e) {
     var key = e.keyCode ? e.keyCode : e.which;
 
     if(key==38 || key==40 || key==37 || key==39){
-        var coups2 = coups+1;
-        $(".nbCoups").html("Nombre de coups: " + coups2);
+
+        $(".nbCoups").html("Nombre de coups: " + coups);
     } else
         $(".nbCoups").html("Nombre de coups: " + coups);
 
