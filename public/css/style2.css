@@ -195,6 +195,12 @@ div {
 .ligne{
     margin-bottom: 15px;
 }
+
+#ligne1{
+    background-color: #5e5e5e;
+
+}
+
 .case {
     border-style:solid;
     border-width:1px;

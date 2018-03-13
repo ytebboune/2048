@@ -1,5 +1,7 @@
 <% var title = 'Page accueil' %>
 <% include head %>
+<script type="text/javascript" src="js/2048.js"></script>
+
 
 <body onload="init();">
 
@@ -39,9 +41,10 @@
 
 <div class="swapMode">
     <button type="button" id="btnMode1" class="btn btn-primary btn-lg" disabled>Mode standard</button>
-    <a href="indexTetris"><button type="button" id="btnMode2" class="btn btn-secondary btn-lg">Mode Tetris</button></a>
+    <a href="indexTetris">
+        <button type="button" id="btnMode2" class="btn btn-secondary btn-lg">Mode Tetris</button>
+    </a>
 </div>
-
 
 
 <div id="btn_jeu">

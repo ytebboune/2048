@@ -202,6 +202,11 @@ div {
 .ligne{
     margin-bottom: 15px;
 }
+
+#ligne1{
+    background-color: #ddd;
+}
+
 .case {
     color: #e7e7e7;
     border-style:solid;

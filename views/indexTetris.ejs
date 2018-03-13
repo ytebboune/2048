@@ -1,13 +1,19 @@
 <% var title = 'Page accueil' %>
 <% include head %>
+<script type="text/javascript" src="js/tetris.js"></script>
 
 <body onload="init();">
 
 <h1>2048 : Mode Tetris</h1>
 
 <div id="jeu">
-    <h1 style="color: red; text-align: center; margin-top:200px; margin-left: 50px;">En travaux lol mdr</h1>
-    <!--<div class="ligne">
+    <div class="ligne">
+        <div class="case" id="ligne1" style="color:black;"></div>
+        <div class="case" id="ligne1" style="color:black;"></div>
+        <div class="case" id="ligne1" style="color:black;"></div>
+        <div class="case" id="ligne1" style="color:black;"></div>
+    </div>
+    <div class="ligne">
         <div class="case"></div>
         <div class="case"></div>
         <div class="case"></div>
@@ -32,11 +38,13 @@
         <div class="case"></div>
         <div class="case"></div>
         <div class="case"></div>
-    </div>-->
+    </div>
 </div>
 
 <div class="swapMode">
-    <a href="index"><button type="button" id="btnMode1" class="btn btn-primary btn-lg">Mode standard</button></a>
+    <a href="index">
+        <button type="button" id="btnMode1" class="btn btn-primary btn-lg">Mode standard</button>
+    </a>
     <button type="button" id="btnMode2" class="btn btn-secondary btn-lg" disabled>Mode Tetris</button>
 </div>
 
