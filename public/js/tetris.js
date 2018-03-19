@@ -7,6 +7,8 @@ var debut = 0;
 var fin;
 var tempsEcoule = 0;
 var coups;
+var ValeurCaseX;
+var ValeurCaseY;
 
 function init() {
 
@@ -19,10 +21,10 @@ function init() {
         }
     }
     newValeur();
-    coups = 1;
+    coup = 1;
 
     oldGrille = new Array(5);
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < grille.length; i++) {
         oldGrille[i] = new Array(4);
         for (j = 0; j < oldGrille.length; j++) {
             oldGrille[i][j] = new maCase("");
@@ -47,7 +49,6 @@ function comparer() {
     }
     return false;
 }
-
 function afficherGrille() {
 
     var listCase = document.getElementsByClassName('case');
@@ -148,19 +149,21 @@ function newValeur() {
     var etat = false;
 
     while (etat == false) {
-        var x = 0;
         var y = Math.floor(Math.random() * 4);
+        var x = 0;
 
         var laCase = grille[x][y];
 
-        var z = Math.floor(Math.random() * 5);
-        if (z == 4) valeur = 4;
+        var z = Math.floor(Math.random() * 9);
+        if (z == 6) valeur = 4;
         else valeur = 2;
 
         if (laCase.getValeur() == "") {
             laCase.insertionValeur(valeur);
             etat = true;
             laCase.setBool(false);
+            ValeurCaseX = x;
+            ValeurCaseY = y;
         }
     }
 }
@@ -182,9 +185,9 @@ maCase.prototype.setBool = function (b) {
 }
 
 function victoire() {
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == "16") {
+            if (grille[i][j].getValeur() == "2048") {
                 if (tempsEcoule == 0) {
                     fin = new Date();
                     tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
@@ -199,7 +202,7 @@ function victoire() {
 
 function defaite() {
     var tmp = 0;
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
             if (grille[i][j].getValeur() == 0){
                 tmp +=1;
@@ -229,33 +232,24 @@ function actionClavier(e) {
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
 
-    if(key==38 || key==40 || key==37 || key==39){
+    if(key==40 || key==37 || key==39){
 
         $(".nbCoups").html("Nombre de coups: " + coups);
     } else
         $(".nbCoups").html("Nombre de coups: " + coups);
 
-
+    
     if (victoire() == false) {
-        if (key == 38) {
-            deplacementVersHaut();
-            fusionerVersHaut();
-            deplacementVersHaut();
-
-        } else if (key == 40) {
-            deplacementVersBas();
-            fusionerVersBas();
-            deplacementVersBas();
-
+        if (key == 40) {
+            deplacementCaseVersBas();
+            
         } else if (key == 37) {
-            deplacementVersGauche();
+            deplacementCaseVersGauche();
             fusionerVersGauche();
-            deplacementVersGauche();
-
+            
         } else if (key == 39) {
-            deplacementVersDroite();
+            deplacementCaseVersDroite();
             fusionerVersDroite();
-            deplacementVersDroite();
         }
     }
 
@@ -268,91 +262,71 @@ function actionClavier(e) {
         $(".message").slideDown();
         $(".message").html("Vous avez fini le jeu en " + tempsEcoule + " secondes en "+ coups +" coups.");
         $.ajax({
-            type: "POST",
-            url: '/nouveauRecord',
-            data: {
-                temps: tempsEcoule,
-                coups: coups
-            },
-            success: retour => {
-            console.log(retour);
-    }
-    });
+          type: "POST",
+          url: '/nouveauRecord',
+          data: {
+              temps: tempsEcoule,
+              coups: coups
+          },
+          success: retour => {
+              console.log(retour);
+          }
+        });
     }
 
     if (comparer()) {
+        coups++;
+        afficherGrille();
+        
+    }
+}
+
+function deplacementCaseVersBas() {
+    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" && ValeurCaseX < 3) {
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX+1;
+        ValeurCaseY = ValeurCaseY;
+        console.log(ValeurCaseX);
+    }
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" && ValeurCaseX < 3){
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX+1;
+        ValeurCaseY = ValeurCaseY;
+        console.log(ValeurCaseX);
+    }
+    else if(ValeurCaseX > 2 && grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         newValeur();
         afficherGrille();
-        coups++;
-    }
-
-}
-
-function deplacementVersHaut() {
-    //console.log("haut");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 5; j++) {
-            for (i = 0; i < 3; i++) {
-                if (grille[i][j].getValeur() == "") {
-                    grille[i][j].insertionValeur(grille[i + 1][j].getValeur());
-                    grille[i + 1][j].insertionValeur("");
-                }
-            }
-        }
+        console.log(ValeurCaseX);
+       }
+    else if(ValeurCaseX > 2 && grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        newValeur();
+        afficherGrille();
+        console.log(ValeurCaseX); 
     }
 }
 
-function deplacementVersBas() {
-    //console.log("bas");
-    for (x = 0; x < 4; x++) {
-        for (j = 0; j < 5; j++) {
-            for (i = 3; i > 0; i--) {
-                if (grille[i][j].getValeur() == "") {
-                    grille[i][j].insertionValeur(grille[i - 1][j].getValeur());
-                    grille[i - 1][j].insertionValeur("");
-                }
-            }
-        }
+function deplacementCaseVersGauche() {
+    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "") {
+        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX;
+        ValeurCaseY = ValeurCaseY-1;
     }
 }
 
-function deplacementVersGauche() {
-    //console.log("gauche");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 0; i < 3; i++) {
-                if (grille[j][i].getValeur() == "") {
-                    grille[j][i].insertionValeur(grille[j][i + 1].getValeur());
-                    grille[j][i + 1].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
-function deplacementVersDroite() {
-    //console.log("droite");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 3; i > 0; i--) {
-                if (grille[j][i].getValeur() == "") {
-                    grille[j][i].insertionValeur(grille[j][i - 1].getValeur());
-                    grille[j][i - 1].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
-function fusionerVersHaut() {
-    //console.log("fusion haut");
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 3; i++) {
-            if (grille[i][j].getValeur() == grille[i + 1][j].getValeur() && grille[i][j].getValeur() != 0) {
-                grille[i][j].insertionValeur(grille[i][j].getValeur() * 2);
-                grille[i + 1][j].insertionValeur("");
-            }
-        }
+function deplacementCaseVersDroite() {
+    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "") {
+        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX;
+        ValeurCaseY = ValeurCaseY+1;
     }
 }
 
@@ -367,7 +341,6 @@ function fusionerVersBas() {
         }
     }
 }
-
 function fusionerVersGauche() {
     //console.log("fusion gauche");
     for (j = 0; j < 4; j++) {
@@ -392,16 +365,11 @@ function fusionerVersDroite() {
     }
 }
 
-function testFusionHaut() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 3; i++) {
-            if (grille[i][j].getValeur() == grille[i + 1][j].getValeur() && grille[i][j].getValeur() != 0) {
-                tmp = true;
+function testDeplacementCaseBas(){
+    var tmp = true;
+    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() != 0 && ValeurCaseX < 5) {
+                tmp = false;
             }
-        }
-    }
-    return tmp;
 }
 
 function testFusionBas() {
@@ -409,30 +377,6 @@ function testFusionBas() {
     for (j = 0; j < 4; j++) {
         for (i = 3; i > 0; i--) {
             if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
-                tmp = true;
-            }
-        }
-    }
-    return tmp;
-}
-
-function testFusionDroite() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 3; i > 0; i--) {
-            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
-                tmp = true;
-            }
-        }
-    }
-    return tmp;
-}
-
-function testFusionGauche() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 3; i++) {
-            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
                 tmp = true;
             }
         }
@@ -459,118 +403,4 @@ function isIdUnique (username) {
             }
             return true;
         });
-}
-
-function deplacementVersGauche() {
-    //console.log("gauche");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 0; i < 4; i++) {
-                if (grille[j][i].getValeur() == "") {
-                    grille[j][i].insertionValeur(grille[j][i + 1].getValeur());
-                    grille[j][i + 1].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
-function deplacementVersDroite() {
-    //console.log("droite");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 4; i > 0; i--) {
-                if (grille[j][i].getValeur() == "") {
-                    grille[j][i].insertionValeur(grille[j][i - 1].getValeur());
-                    grille[j][i - 1].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
-function deplacementVersBas() {
-    //console.log("bas");
-    for (x = 0; x < 3; x++) {
-        for (j = 0; j < 4; j++) {
-            for (i = 4; i > 0; i--) {
-                if (grille[i][j].getValeur() == "") {
-                    grille[i][j].insertionValeur(grille[i - 1][j].getValeur());
-                    grille[i - 1][j].insertionValeur("");
-                }
-            }
-        }
-    }
-}
-
-function fusionerVersBas() {
-    //console.log("fusion bas");
-    for (j = 0; j < 4; j++) {
-        for (i = 4; i > 0; i--) {
-            if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
-                grille[i][j].insertionValeur(grille[i][j].getValeur() * 2);
-                grille[i - 1][j].insertionValeur("");
-            }
-        }
-    }
-}
-
-function fusionerVersGauche() {
-    //console.log("fusion gauche");
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 4; i++) {
-            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
-                grille[j][i].insertionValeur(grille[j][i].getValeur() * 2);
-                grille[j][i + 1].insertionValeur("");
-            }
-        }
-    }
-}
-
-function fusionerVersDroite() {
-    //console.log("fusion droite");
-    for (j = 0; j < 4; j++) {
-        for (i = 3; i > 0; i--) {
-            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
-                grille[j][i].insertionValeur(grille[j][i].getValeur() * 2);
-                grille[j][i - 1].insertionValeur("");
-            }
-        }
-    }
-}
-
-function testFusionBas() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 4; i > 1; i--) {
-            if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
-                tmp = true;
-            }
-        }
-    }
-    return tmp;
-}
-
-function testFusionDroite() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 3; i > 0; i--) {
-            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
-                tmp = true;
-            }
-        }
-    }
-    return tmp;
-}
-
-function testFusionGauche() {
-    var tmp = false;
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 3; i++) {
-            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
-                tmp = true;
-            }
-        }
-    }
-    return tmp;
 }
