@@ -2,6 +2,19 @@
     <input id="theme" type="checkbox" checked data-toggle="toggle" data-on="Thème clair" data-off="Thème foncé"
            onchange="changeCSS()">
     <span id="span-footer">@Copyright - Site non officiel du 2048</span>
+
+
 </footer>
+
+<section id="chat">
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+</section>
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="js/client.js"></script>
+
 </body>
 </html>

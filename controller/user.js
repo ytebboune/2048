@@ -104,6 +104,7 @@ module.exports.login = function (req, res) {
             req.session.username = user.dataValues.username;
             req.session.id_user = user.dataValues.id;
             req.session.email = user.dataValues.email;
+            res.cookie('id_user',user.dataValues.id, {maxAge: 1000 * 60 * 10, httpOnly: false});
             res.redirect('index');
         }
     }).catch(function (error) {
