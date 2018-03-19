@@ -9,6 +9,7 @@ var tempsEcoule = 0;
 var coups;
 var ValeurCaseX;
 var ValeurCaseY;
+var ValeurMaxCase = 3;
 
 function init() {
 
@@ -241,8 +242,10 @@ function actionClavier(e) {
     
     if (victoire() == false) {
         if (key == 40) {
+            if(LastColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1; }
+            //if(MidColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1 }
             deplacementCaseVersBas();
-            
+                        
         } else if (key == 37) {
             deplacementCaseVersGauche();
             fusionerVersGauche();
@@ -281,36 +284,62 @@ function actionClavier(e) {
     }
 }
 
+
+
 function deplacementCaseVersBas() {
-    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" && ValeurCaseX < 3) {
+    
+    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" && ValeurCaseX < ValeurMaxCase) {
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurCaseX = ValeurCaseX+1;
         ValeurCaseY = ValeurCaseY;
-        console.log(ValeurCaseX);
+        ValeurMaxCase = 3;
     }
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" && ValeurCaseX < 3){
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" && ValeurCaseX < ValeurMaxCase){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurCaseX = ValeurCaseX+1;
         ValeurCaseY = ValeurCaseY;
-        console.log(ValeurCaseX);
+        ValeurMaxCase = 3;
     }
-    else if(ValeurCaseX > 2 && grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
+    else if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurMaxCase = 3;
         newValeur();
         afficherGrille();
-        console.log(ValeurCaseX);
        }
-    else if(ValeurCaseX > 2 && grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurMaxCase = 3;
         newValeur();
-        afficherGrille();
-        console.log(ValeurCaseX); 
+        afficherGrille(); 
     }
 }
+
+function LastColumnFull(){
+    var tmp = false;
+    var tmp2 = 0;
+    for(var i = 0; i < 4; i++){
+        if (grille[i][ValeurCaseY+1].getValeur() != 0) {
+            tmp2++;
+        }
+    }
+    if (tmp2 != 0){ tmp = true }
+    return tmp;
+}
+/*function LastColumnFull(){
+    var tmp = false;
+    var tmp2 = 0;
+    for(var i = 0; i < 4; i++){
+        if (grille[i][ValeurCaseY].getValeur() != 0) {
+            tmp2++;
+        }
+    }
+    if (tmp2 != 0){ tmp = true }
+    return tmp;
+}*/
 
 function deplacementCaseVersGauche() {
     if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "") {
@@ -370,6 +399,7 @@ function testDeplacementCaseBas(){
     if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() != 0 && ValeurCaseX < 5) {
                 tmp = false;
             }
+    return tmp;
 }
 
 function testFusionBas() {
