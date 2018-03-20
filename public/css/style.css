@@ -1,3 +1,23 @@
+.text{
+    width:75%;
+}
+
+.text-l{
+    float:left;
+}
+
+.frame{
+    overflow:scroll;
+    margin-bottom: 90px;
+    background:#e0e0de;
+    height:400px;
+    padding:0;
+}
+.frame > div:last-of-type{
+    bottom: 50px;
+    width: 20%;
+    position: fixed;
+}
 
 .panel-login {
     border-color: #ccc;
