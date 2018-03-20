@@ -2,7 +2,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-var histo = ["","","","","","","","","",""];
+var histo = ["","","","","","","","","","","","","","","","","","",""];
 
 io.on('connection', socket => {
   socket.emit('histo', histo);
