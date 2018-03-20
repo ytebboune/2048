@@ -3,13 +3,8 @@
 var grille;
 var bool = false;
 var oldGrille;
-var debut = 0;
-var fin;
-var tempsEcoule = 0;
-var coups;
 var ValeurCaseX;
 var ValeurCaseY;
-var ValeurMaxCase = 3;
 
 function init() {
 
@@ -18,22 +13,31 @@ function init() {
     for (i = 0; i < grille.length; i++) {
         grille[i] = new Array(4);
         for (j = 0; j < grille.length-1; j++) {
-            grille[i][j] = new maCase("");
+            grille[i][j] = new maCase("0");
         }
     }
     newValeur();
-    coup = 1;
 
     oldGrille = new Array(5);
     for (i = 0; i < grille.length; i++) {
         oldGrille[i] = new Array(4);
         for (j = 0; j < oldGrille.length-1; j++) {
-            oldGrille[i][j] = new maCase("");
+            oldGrille[i][j] = new maCase("0");
         }
     }
     afficherGrille();
 }
 
+var last = now = new Date();
+function frame() {
+    now = new Date();
+    if(((now.getTime() - last.getTime()) / 1000.0) > 1){
+        last = now;
+        deplacementCaseVersBas();
+        afficherGrille();
+    }
+    requestAnimationFrame(frame);
+}
 
 function sauverGrille() {
     for (i = 0; i < 5; i++) {
@@ -51,6 +55,7 @@ function comparer() {
     }
     return false;
 }
+
 function afficherGrille() {
 
     var listCase = document.getElementsByClassName('case');
@@ -64,78 +69,71 @@ function afficherGrille() {
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case2";
                     listCase[indice].classList.add("case2");
-
-                    /*
-                                        listCase[indice].classList.remove("default");
-                    */
-
-                    /*                    else if(listCase[indice].classList.contains("case4"))
-                                            listCase[indice].classList.remove("case4");
-                                        else if(listCase[indice].classList.contains("case8"))
-                                            listCase[indice].classList.remove("case8");
-                                        else if(listCase[indice].classList.contains("case16"))
-                                            listCase[indice].classList.remove("case16");
-                                        else if(listCase[indice].classList.contains("case32"))
-                                            listCase[indice].classList.remove("case32");*/
                     break;
+                    
                 case "4":
                     listCase[indice].classList.add("case4");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case4";
                     listCase[indice].classList.add("case4");
-
                     break;
+                    
                 case "8":
                     listCase[indice].classList.add("case8");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case8";
                     listCase[indice].classList.add("case8");
-
                     break;
+                    
                 case "16":
                     listCase[indice].classList.add("case16");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case16";
                     listCase[indice].classList.add("case16");
-
                     break;
+                    
                 case "32":
                     listCase[indice].classList.add("case32");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case32";
-
                     break;
+                    
                 case "64":
                     listCase[indice].classList.add("case64");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case64";
-
                     break;
+                    
                 case "128":
                     listCase[indice].classList.add("case128");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case128";
                     break;
+                    
                 case "256":
                     listCase[indice].classList.add("case256");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case256";
                     break;
+                    
                 case "512":
                     listCase[indice].classList.add("case512");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case512";
                     break;
+                    
                 case "1024":
                     listCase[indice].classList.add("case1024");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case1024";
                     break;
+                    
                 case "2048":
                     listCase[indice].classList.add("case2048");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
                         listCase[indice].className = "case case2048";
                     break;
+                    
                 default:
                     listCase[indice].classList.add("default");
                     if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
@@ -160,7 +158,7 @@ function newValeur() {
         if (z == 6) valeur = 4;
         else valeur = 2;
 
-        if (laCase.getValeur() == "") {
+        if (laCase.getValeur() == "0") {
             laCase.insertionValeur(valeur);
             etat = true;
             laCase.setBool(false);
@@ -189,14 +187,7 @@ maCase.prototype.setBool = function (b) {
 function victoire() {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == "2048") {
-                if (tempsEcoule == 0) {
-                    fin = new Date();
-                    tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
-                    tempsEcoule = tempsEcoule / 1000;
-                }
-                return true;
-            }
+            if (grille[i][j].getValeur() == "2048") return true;
         }
     }
     return false;
@@ -212,14 +203,7 @@ function defaite() {
         }
     }
     if(tmp == 0){
-        if(testFusionHaut() == false && testFusionBas() == false && testFusionDroite() == false && testFusionGauche() == false) {
-            if (tempsEcoule == 0) {
-                fin = new Date();
-                tempsEcoule = fin.getTime() - debut.getTime(); // temps écoulé en millisecondes
-                tempsEcoule = tempsEcoule / 1000;
-            }
-            return true;
-        }
+        if(testFusionHaut() == false && testFusionBas() == false && testFusionDroite() == false && testFusionGauche() == false) return true;
     }
     return false;
 }
@@ -228,197 +212,115 @@ function actionClavier(e) {
 
     if (defaite() == true) {
         $(".message").show();
-        $(".message").html("Vous avez perdu la partie en " + tempsEcoule + " secondes.");
+        $(".message").html("Vous avez perdu la partie.");
     }
 
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
 
-    if(key==40 || key==37 || key==39){
-
-        $(".nbCoups").html("Nombre de coups: " + coups);
-    } else
-        $(".nbCoups").html("Nombre de coups: " + coups);
-
-
     if (victoire() == false) {
-        if (key == 40) {
-            if(LastColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1; }
-            //if(MidColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1 }
-            deplacementCaseVersBas();
-
-        } else if (key == 37) {
-
-            deplacementCaseVersGauche();
-            // fusionerVersGauche();
-
-        } else if (key == 39) {
-
-            deplacementCaseVersDroite();
-            // fusionerVersDroite();
-        }
-        else if (key == 13 && testImpossibleBas()){
-            newValeur();
-        }
+        if (key == 40) deplacementCaseVersBas(e);
+        if (key == 37) deplacementCaseVersGauche();
+        if (key == 39) deplacementCaseVersDroite();
+        if (key == 13) { newValeur(); }
     }
-
-    if (debut == 0) {
-        debut = new Date();
-    }
-
     if (victoire() == true) {
-
         $(".message").slideDown();
-        $(".message").html("Vous avez fini le jeu en " + tempsEcoule + " secondes en "+ coups +" coups.");
-        $.ajax({
-          type: "POST",
-          url: '/nouveauRecord',
-          data: {
-              temps: tempsEcoule,
-              coups: coups
-          },
-          success: retour => {
-              console.log(retour);
-          }
-        });
+        $(".message").html("Vous avez fini le jeu ! Bravo !");
     }
 
-    if (comparer()) {
-        coups++;
-        afficherGrille();
-
-    }
 }
 
-
-
-function deplacementCaseVersBas() {
-    // Déplacer la case vers le bas de 1
-    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" && ValeurCaseX < ValeurMaxCase) {
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        ValeurCaseX = ValeurCaseX+1;
-        ValeurCaseY = ValeurCaseY;
-        ValeurMaxCase = 3;
-    }
-    // Si pas de case vide en dessous, regarde si possibilité de fusionner
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" && ValeurCaseX < ValeurMaxCase){
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        ValeurCaseX = ValeurCaseX+1;
-        ValeurCaseY = ValeurCaseY;
-        ValeurMaxCase = 3;
-    }
-    // Si pas possible d'aller en dessous, on créé nouvelle valeur
-    else if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        ValeurMaxCase = 3;
-        // newValeur();
-        afficherGrille();
-       }
-
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        ValeurMaxCase = 3;
-        // newValeur();
-        afficherGrille();
-    }
-}
 function testImpossibleBas(){
-    if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
+    if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
+       || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
         return false;
     }
     else
         return true;
 }
-function LastColumnFull(){
-    var tmp = false;
-    var tmp2 = 0;
-    for(var i = 0; i < 4; i++){
-        if (grille[i][ValeurCaseY+1].getValeur() != 0) {
-            tmp2++;
+
+function deplacementCaseVersBas() {
+    console.log(ValeurCaseX);
+    // Déplacer la case vers le bas de 1
+    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "0") {
+        
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
+        ValeurCaseX = ValeurCaseX+1;
+        ValeurCaseY = ValeurCaseY;
+        afficherGrille();
+        if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
+            newValeur();
+            afficherGrille();
         }
     }
-    if (tmp2 != 0){ tmp = true }
-    return tmp;
+    // Si pas de case vide en dessous, regarde si possibilité de fusionner
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
+            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "0"){
+        
+        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
+        ValeurCaseX = ValeurCaseX+1;
+        ValeurCaseY = ValeurCaseY;
+        afficherGrille();
+        if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
+            newValeur();
+            afficherGrille(); 
+        }
+    }
+    //Sinon, on ne peut donc rien faire alors on créer une nouvelle case pour continuer à jouer
+    else {
+        newValeur();
+        afficherGrille();
+    }
 }
-/*function LastColumnFull(){
-    var tmp = false;
-    var tmp2 = 0;
-    for(var i = 0; i < 4; i++){
-        if (grille[i][ValeurCaseY].getValeur() != 0) {
-            tmp2++;
-        }
-    }
-    if (tmp2 != 0){ tmp = true }
-    return tmp;
-}*/
 
 function deplacementCaseVersGauche() {
-    console.log(ValeurCaseX);
-    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "" ) {
+    console.log(ValeurCaseY);
+    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "0") {
+        
         grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY-1;
         afficherGrille();
     }
     // Si pas de case vide à gauche, regarde si possibilité de fusionner
 
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur() ){
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur()){
+        
         grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY-1;
-        afficherGrille();
-    }
-    // Si pas possible d'aller en dessous, on créé nouvelle valeur
-    else if(grille[ValeurCaseX][ValeurCaseY-1].getValeur() == ""){
-        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        // newValeur();
-        afficherGrille();
-    }
-
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur() ){
-        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        // newValeur();
         afficherGrille();
     }
 }
 
 function deplacementCaseVersDroite() {
     console.log(ValeurCaseY);
-    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "") {
+    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "0") {
+        
         grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY+1;
         afficherGrille();
     }
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" ){
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() 
+            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "0" ){
+        
         grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY+1;
-        afficherGrille();
-    }
-    // Si pas possible d'aller en dessous, on créé nouvelle valeur
-    else if(grille[ValeurCaseX][ValeurCaseY+1].getValeur() == ""){
-        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        // newValeur();
-        afficherGrille();
-    }
-
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
-        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        ValeurMaxCase = 3;
-        // newValeur();
         afficherGrille();
     }
 }
@@ -429,41 +331,10 @@ function fusionerVersBas() {
         for (i = 3; i > 0; i--) {
             if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
                 grille[i][j].insertionValeur(grille[i][j].getValeur() * 2);
-                grille[i - 1][j].insertionValeur("");
+                grille[i - 1][j].insertionValeur("0");
             }
         }
     }
-}
-function fusionerVersGauche() {
-    //console.log("fusion gauche");
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 3; i++) {
-            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
-                grille[j][i].insertionValeur(grille[j][i].getValeur() * 2);
-                grille[j][i + 1].insertionValeur("");
-            }
-        }
-    }
-}
-
-function fusionerVersDroite() {
-    //console.log("fusion droite");
-    for (j = 0; j < 4; j++) {
-        for (i = 3; i > 0; i--) {
-            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
-                grille[j][i].insertionValeur(grille[j][i].getValeur() * 2);
-                grille[j][i - 1].insertionValeur("");
-            }
-        }
-    }
-}
-
-function testDeplacementCaseBas(){
-    var tmp = true;
-    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() != 0 && ValeurCaseX < 5) {
-                tmp = false;
-            }
-    return tmp;
 }
 
 function testFusionBas() {
@@ -476,25 +347,4 @@ function testFusionBas() {
         }
     }
     return tmp;
-}
-
-function isIdUnique (email, username) {
-    return user.count({ where: { $or: [{email: email}, {username: username}] }})
-        .then(function(count){
-            if (count != 0) {
-                return false;
-            }
-            return true;
-        });
-}
-
-
-function isIdUnique (username) {
-    return user.count({ where: {username: username}})
-        .then(function(count){
-            if (count != 0) {
-                return false;
-            }
-            return true;
-        });
 }
