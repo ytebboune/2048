@@ -52,6 +52,52 @@
     <div class="btn_2048"><a href="index">Recommencer</a></div>
 </div>
 
+    
+<section id="chat">
+<div class="container">
+		<div style="background:aliceblue; overflow: scroll; max-height: 100%; width: 100%; height:445px; border-radius: 8px;">
+			<ul id="messages"></ul>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
+
+		<script>
+			var socket = io.connect("http://localhost:3000");
+			$(function() {
+				socket.on('histo', historique => {
+					historique.forEach(msg => {
+						$('#messages').append($('<p>').text(msg.author + " : " + msg.text));
+					});
+				});
+				socket.on('chat message', msg => {
+					$('#messages').append($('<p>').text(msg.author + " : " + msg.text));
+					window.scrollTo(0, document.body.scrollHeight);
+				});
+			});
+		</script>
+
+		<form action "">
+				<input id="m" autocomplete="off" placeholder="Entrez votre message..." style="padding:6px; margin-left:3%; width:23%; border-radius:6px;" />&nbsp;&nbsp;
+				<button class="btn btn-primary navbar-btn">Envoyer</button>
+				<script>
+					$(function() {
+						var author = "<%= _username %>"; //TODO changer par votre moyen de connaitre l'utilisateur courant
+						$('form').submit(() => {
+							if ($('#m').val().trim() != "") {
+								socket.emit('chat message', {
+									"author": author,
+									"text": $('#m').val()
+								});
+								$('#m').val('');
+							}
+							return false;
+						});
+					});
+				</script>
+		</form>
+	</div>
+</section>
+
 </body>
 
 <% include foot %>

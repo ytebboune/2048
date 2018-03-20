@@ -5,31 +5,8 @@ var app = express();
 var session = require('express-session');
 var userController = require("./controller/user.js");
 var classementController = require("./controller/classement.js");
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var histo = ["","","","","","","","","",""];
 
 // config
-
-http.listen(3000, function(){
-    console.log('Server is listening on *:3000');
-});
-
-io.on('connection', function(socket){
-    socket.emit('histo', histo);
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });
-    socket.on('chat-message', function (message) {
-        histo.push(message);
-        histo.shift();
-        console.log('message : ' + message.text);
-    });
-    socket.on('chat-message', function (message) {
-        io.emit('chat-message', message);
-    });
-});
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -109,6 +86,7 @@ app.post('/loginVerif', userController.login);
 app.post('/nouveauRecord', classementController.NouveauRecord);
 
 app.post('/admin', userController.supprimerUsers)
+
 app.listen(1313);
 
 
