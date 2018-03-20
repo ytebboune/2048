@@ -17,7 +17,7 @@ function init() {
     grille = new Array(5);
     for (i = 0; i < grille.length; i++) {
         grille[i] = new Array(4);
-        for (j = 0; j < grille.length; j++) {
+        for (j = 0; j < grille.length-1; j++) {
             grille[i][j] = new maCase("");
         }
     }
@@ -27,12 +27,13 @@ function init() {
     oldGrille = new Array(5);
     for (i = 0; i < grille.length; i++) {
         oldGrille[i] = new Array(4);
-        for (j = 0; j < oldGrille.length; j++) {
+        for (j = 0; j < oldGrille.length-1; j++) {
             oldGrille[i][j] = new maCase("");
         }
     }
     afficherGrille();
 }
+
 
 function sauverGrille() {
     for (i = 0; i < 5; i++) {
