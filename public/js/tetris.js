@@ -239,20 +239,25 @@ function actionClavier(e) {
     } else
         $(".nbCoups").html("Nombre de coups: " + coups);
 
-    
+
     if (victoire() == false) {
         if (key == 40) {
             if(LastColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1; }
             //if(MidColumnFull() == true) { ValeurMaxCase = ValeurMaxCase -1 }
             deplacementCaseVersBas();
-                        
+
         } else if (key == 37) {
+
             deplacementCaseVersGauche();
-            fusionerVersGauche();
-            
+            // fusionerVersGauche();
+
         } else if (key == 39) {
+
             deplacementCaseVersDroite();
-            fusionerVersDroite();
+            // fusionerVersDroite();
+        }
+        else if (key == 13 && testImpossibleBas()){
+            newValeur();
         }
     }
 
@@ -280,14 +285,14 @@ function actionClavier(e) {
     if (comparer()) {
         coups++;
         afficherGrille();
-        
+
     }
 }
 
 
 
 function deplacementCaseVersBas() {
-    
+    // Déplacer la case vers le bas de 1
     if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" && ValeurCaseX < ValeurMaxCase) {
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
@@ -295,6 +300,7 @@ function deplacementCaseVersBas() {
         ValeurCaseY = ValeurCaseY;
         ValeurMaxCase = 3;
     }
+    // Si pas de case vide en dessous, regarde si possibilité de fusionner
     else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" && ValeurCaseX < ValeurMaxCase){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
@@ -302,22 +308,30 @@ function deplacementCaseVersBas() {
         ValeurCaseY = ValeurCaseY;
         ValeurMaxCase = 3;
     }
+    // Si pas possible d'aller en dessous, on créé nouvelle valeur
     else if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurMaxCase = 3;
-        newValeur();
+        // newValeur();
         afficherGrille();
        }
+
     else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurMaxCase = 3;
-        newValeur();
-        afficherGrille(); 
+        // newValeur();
+        afficherGrille();
     }
 }
-
+function testImpossibleBas(){
+    if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
+        return false;
+    }
+    else
+        return true;
+}
 function LastColumnFull(){
     var tmp = false;
     var tmp2 = 0;
@@ -342,20 +356,69 @@ function LastColumnFull(){
 }*/
 
 function deplacementCaseVersGauche() {
-    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "") {
+    console.log(ValeurCaseX);
+    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "" ) {
         grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY-1;
+        afficherGrille();
+    }
+    // Si pas de case vide à gauche, regarde si possibilité de fusionner
+
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur() ){
+        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX;
+        ValeurCaseY = ValeurCaseY-1;
+        afficherGrille();
+    }
+    // Si pas possible d'aller en dessous, on créé nouvelle valeur
+    else if(grille[ValeurCaseX][ValeurCaseY-1].getValeur() == ""){
+        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        // newValeur();
+        afficherGrille();
+    }
+
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur() ){
+        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        // newValeur();
+        afficherGrille();
     }
 }
 
 function deplacementCaseVersDroite() {
+    console.log(ValeurCaseY);
     if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "") {
         grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY+1;
+        afficherGrille();
+    }
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" ){
+        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurCaseX = ValeurCaseX;
+        ValeurCaseY = ValeurCaseY+1;
+        afficherGrille();
+    }
+    // Si pas possible d'aller en dessous, on créé nouvelle valeur
+    else if(grille[ValeurCaseX][ValeurCaseY+1].getValeur() == ""){
+        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        // newValeur();
+        afficherGrille();
+    }
+
+    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
+        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
+        ValeurMaxCase = 3;
+        // newValeur();
+        afficherGrille();
     }
 }
 
