@@ -65,12 +65,12 @@
             socket.on('histo', historique => {
                 historique.forEach(msg => {
                 $('#messages').append($('<p>').text(msg.author + " : " + msg.text));
-        });
+            });
         });
             socket.on('chat message', msg => {
                 $('#messages').append($('<p>').text(msg.author + " : " + msg.text));
             window.scrollTo(0, document.body.scrollHeight);
-        });
+            });
         });
     </script>
     <div class="msj-rta macro">
