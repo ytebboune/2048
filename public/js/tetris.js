@@ -13,7 +13,7 @@ function init() {
     for (i = 0; i < grille.length; i++) {
         grille[i] = new Array(4);
         for (j = 0; j < grille.length-1; j++) {
-            grille[i][j] = new maCase("0");
+            grille[i][j] = new maCase("");
         }
     }
     newValeur();
@@ -22,7 +22,7 @@ function init() {
     for (i = 0; i < grille.length; i++) {
         oldGrille[i] = new Array(4);
         for (j = 0; j < oldGrille.length-1; j++) {
-            oldGrille[i][j] = new maCase("0");
+            oldGrille[i][j] = new maCase("");
         }
     }
     afficherGrille();
@@ -158,7 +158,7 @@ function newValeur() {
         if (z == 6) valeur = 4;
         else valeur = 2;
 
-        if (laCase.getValeur() == "0") {
+        if (laCase.getValeur() == "") {
             laCase.insertionValeur(valeur);
             etat = true;
             laCase.setBool(false);
@@ -219,7 +219,7 @@ function actionClavier(e) {
     var key = e.keyCode ? e.keyCode : e.which;
 
     if (victoire() == false) {
-        if (key == 40) deplacementCaseVersBas(e);
+        // if (key == 40) deplacementCaseVersBas(e);
         if (key == 37) deplacementCaseVersGauche();
         if (key == 39) deplacementCaseVersDroite();
         if (key == 13) { newValeur(); }
@@ -231,48 +231,57 @@ function actionClavier(e) {
 
 }
 
-function testImpossibleBas(){
+function testImpossibleBas(){ // retourne false si possible de fusionner ou possible d'aller en bas
     if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
-       || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == ""){
+       || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" || ValeurCaseX == 4){
+        console.log( grille[ValeurCaseX+1][ValeurCaseY].getValeur());
         return false;
     }
-    else
+    else {
+        console.log( grille[ValeurCaseX+1][ValeurCaseY].getValeur());
         return true;
+    }
 }
 
 function deplacementCaseVersBas() {
     console.log(ValeurCaseX);
+
+    console.log(ValeurCaseY);
     // Déplacer la case vers le bas de 1
-    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "0") {
+    if (ValeurCaseX == 4){
+        newValeur();
+        afficherGrille();
+    }
+    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "") {
         
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX+1;
         ValeurCaseY = ValeurCaseY;
         afficherGrille();
-        if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
-            newValeur();
-            afficherGrille();
-        }
+        // if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
+        //     newValeur();
+        //     afficherGrille();
+        // }
     }
     // Si pas de case vide en dessous, regarde si possibilité de fusionner
     else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
-            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "0"){
+            && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
         
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX+1;
         ValeurCaseY = ValeurCaseY;
         afficherGrille();
-        if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
+        if(ValeurCaseX == 4){
             newValeur();
             afficherGrille(); 
         }
     }
     //Sinon, on ne peut donc rien faire alors on créer une nouvelle case pour continuer à jouer
-    else {
+    else if (testImpossibleBas()) {
         newValeur();
         afficherGrille();
     }
@@ -280,10 +289,10 @@ function deplacementCaseVersBas() {
 
 function deplacementCaseVersGauche() {
     console.log(ValeurCaseY);
-    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "0") {
+    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "") {
         
         grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY-1;
@@ -294,7 +303,7 @@ function deplacementCaseVersGauche() {
     else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur()){
         
         grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY-1;
@@ -304,20 +313,20 @@ function deplacementCaseVersGauche() {
 
 function deplacementCaseVersDroite() {
     console.log(ValeurCaseY);
-    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "0") {
+    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "") {
         
         grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY+1;
         afficherGrille();
     }
     else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() 
-            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "0" ){
+            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" ){
         
         grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
-        grille[ValeurCaseX][ValeurCaseY].insertionValeur("0");
+        grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
         
         ValeurCaseX = ValeurCaseX;
         ValeurCaseY = ValeurCaseY+1;
@@ -331,7 +340,7 @@ function fusionerVersBas() {
         for (i = 3; i > 0; i--) {
             if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
                 grille[i][j].insertionValeur(grille[i][j].getValeur() * 2);
-                grille[i - 1][j].insertionValeur("0");
+                grille[i - 1][j].insertionValeur("");
             }
         }
     }
@@ -341,7 +350,7 @@ function testFusionBas() {
     var tmp = false;
     for (j = 0; j < 4; j++) {
         for (i = 3; i > 0; i--) {
-            if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != 0) {
+            if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != "") {
                 tmp = true;
             }
         }
