@@ -61,15 +61,17 @@
     <script>
         var socket = io.connect("http://localhost:3000");
         $(function() {
-            socket.on('histo', historique => {
+            socket.on('historique', historique => {
                 historique.forEach(msg => {
-                $('#messages').append($('<p>').text(msg.author + " : " + msg.text));
-        });
+                if(msg.author != null && msg.text != null){
+                    $('#messages').append($('<p>').text(msg.author + " : " + msg.text));
+                }
+            });
         });
             socket.on('chat message', msg => {
                 $('#messages').append($('<p>').text(msg.author + " : " + msg.text));
-            window.scrollTo(0, document.body.scrollHeight);
-        });
+                window.scrollTo(0, document.body.scrollHeight);
+            });
         });
     </script>
     <div class="msj-rta macro">

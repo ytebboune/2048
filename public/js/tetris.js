@@ -203,7 +203,7 @@ function defaite() {
         }
     }
     if(tmp == 0){
-        if(testFusionHaut() == false && testFusionBas() == false && testFusionDroite() == false && testFusionGauche() == false) return true;
+        if(testFusionBas() == false) return true;
     }
     return false;
 }
@@ -228,7 +228,6 @@ function actionClavier(e) {
         $(".message").slideDown();
         $(".message").html("Vous avez fini le jeu ! Bravo !");
     }
-
 }
 
 function testImpossibleBas(){
@@ -257,7 +256,7 @@ function deplacementCaseVersBas() {
         }
     }
     // Si pas de case vide en dessous, regarde si possibilité de fusionner
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
+    if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
             && grille[ValeurCaseX][ValeurCaseY].getValeur() != "0"){
         
         grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
