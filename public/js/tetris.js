@@ -5,6 +5,7 @@ var bool = false;
 var oldGrille;
 var ValeurCaseX;
 var ValeurCaseY;
+var alreadyDefeat = false;
 
 function init() {
 
@@ -12,7 +13,7 @@ function init() {
     grille = new Array(5);
     for (i = 0; i < grille.length; i++) {
         grille[i] = new Array(4);
-        for (j = 0; j < grille.length-1; j++) {
+        for (j = 0; j < grille.length - 1; j++) {
             grille[i][j] = new maCase("");
         }
     }
@@ -21,7 +22,7 @@ function init() {
     oldGrille = new Array(5);
     for (i = 0; i < grille.length; i++) {
         oldGrille[i] = new Array(4);
-        for (j = 0; j < oldGrille.length-1; j++) {
+        for (j = 0; j < oldGrille.length - 1; j++) {
             oldGrille[i][j] = new maCase("");
         }
     }
@@ -29,14 +30,26 @@ function init() {
 }
 
 var last = now = new Date();
+
 function frame() {
-    now = new Date();
-    if(((now.getTime() - last.getTime()) / 1000.0) > 1){
-        last = now;
-        deplacementCaseVersBas();
-        afficherGrille();
+    if (!victoire() && alreadyDefeat == false) {
+        now = new Date();
+        if (((now.getTime() - last.getTime()) / 1000.0) > 1) {
+            last = now;
+            deplacementCaseVersBas();
+            afficherGrille();
+        }
+        requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    if (defaite()) {
+        console.log("suce");
+        $(".message").slideDown();
+        $(".message").html("Vous avez perdu la partie. Retentez votre chance sans attendre !");
+    }
+    if (victoire() == true) {
+        $(".message").slideDown();
+        $(".message").html("Bravo ! Vous avez fini le mode tetris 2048, n'hésitez pas à partager votre performance sur le chat <span id='test'>☺</span>");
+    }
 }
 
 function sauverGrille() {
@@ -66,79 +79,96 @@ function afficherGrille() {
             switch (listCase[indice].textContent) {
                 case "2":
                     listCase[indice].classList.add("case2");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case2";
-                    listCase[indice].classList.add("case2");
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case2");
+                    }
+                    // listCase[indice].classList.add("case2");
+
                     break;
-                    
                 case "4":
                     listCase[indice].classList.add("case4");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case4";
-                    listCase[indice].classList.add("case4");
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case4");
+                    }
+                    // listCase[indice].classList.add("case4");
+
                     break;
-                    
                 case "8":
                     listCase[indice].classList.add("case8");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case8";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case8");
+
+                    }
                     listCase[indice].classList.add("case8");
+
                     break;
-                    
                 case "16":
                     listCase[indice].classList.add("case16");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case16";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case16");
+                    }
                     listCase[indice].classList.add("case16");
+
                     break;
-                    
                 case "32":
                     listCase[indice].classList.add("case32");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case32";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case32");
+                    }
                     break;
-                    
                 case "64":
                     listCase[indice].classList.add("case64");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case64";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case64");
+                    }
                     break;
-                    
                 case "128":
                     listCase[indice].classList.add("case128");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case128";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case128");
+                    }
                     break;
-                    
                 case "256":
                     listCase[indice].classList.add("case256");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case256";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case256");
+                    }
                     break;
-                    
                 case "512":
                     listCase[indice].classList.add("case512");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case512";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case512");
+                    }
                     break;
-                    
                 case "1024":
                     listCase[indice].classList.add("case1024");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case1024";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case1024");
+                    }
                     break;
-                    
                 case "2048":
                     listCase[indice].classList.add("case2048");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case case2048";
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8") || listCase[indice].classList.contains("case16") || listCase[indice].classList.contains("case32") || listCase[indice].classList.contains("case64") || listCase[indice].classList.contains("case128") || listCase[indice].classList.contains("case256") || listCase[indice].classList.contains("case512") || listCase[indice].classList.contains("case1024") || listCase[indice].classList.contains("case2048")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("case2048");
+                    }
                     break;
-                    
                 default:
                     listCase[indice].classList.add("default");
-                    if(listCase[indice].classList.contains("default" || "case2" || "case4" || "case8" || "case16" || "case32" || "case64" || "case128" || "case256" || "case512" || "case1024" || "case2048"))
-                        listCase[indice].className = "case default";
-
+                    if (listCase[indice].classList.contains("default") || listCase[indice].classList.contains("case2") || listCase[indice].classList.contains("case4") || listCase[indice].classList.contains("case8")) {
+                        listCase[indice].className = "case";
+                        listCase[indice].classList.add("default");
+                    }
             }
             indice++;
         }
@@ -172,6 +202,7 @@ function maCase(v) {
     this.valeur = v;
     this.bool = false;
 }
+
 maCase.prototype.getValeur = function () {
     return this.valeur;
 }
@@ -185,7 +216,8 @@ maCase.prototype.setBool = function (b) {
 }
 
 function victoire() {
-    for (i = 0; i < 4; i++) {
+
+    for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
             if (grille[i][j].getValeur() == "2048") return true;
         }
@@ -195,69 +227,73 @@ function victoire() {
 
 function defaite() {
     var tmp = 0;
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 4; j++) {
-            if (grille[i][j].getValeur() == 0){
-                tmp +=1;
+    i = 0;
+        for (j = 0; j <4; j++) {
+            if (grille[i][j].getValeur() != "") {
+                tmp += 1;
             }
-        }
     }
-    if(tmp == 0){
-        if(testFusionHaut() == false && testFusionBas() == false && testFusionDroite() == false && testFusionGauche() == false) return true;
+    if (tmp >= 2) {
+        alreadyDefeat = true;
+
+        return true;
+
     }
     return false;
+
 }
 
 function actionClavier(e) {
 
     if (defaite() == true) {
-        $(".message").show();
-        $(".message").html("Vous avez perdu la partie.");
+        $(".message").slideDown();
+        $(".message").html("Vous avez perdu la partie. Retentez votre chance sans attendre !");
     }
 
     sauverGrille();
     var key = e.keyCode ? e.keyCode : e.which;
+    if (victoire() == false && alreadyDefeat == false) {
+        console.log(alreadyDefeat);
 
-    if (victoire() == false) {
-        // if (key == 40) deplacementCaseVersBas(e);
+        if (key == 40) {
+
+            deplacementCaseVersBas(e);
+
+        }
+
         if (key == 37) deplacementCaseVersGauche();
         if (key == 39) deplacementCaseVersDroite();
-        if (key == 13) { newValeur(); }
     }
     if (victoire() == true) {
         $(".message").slideDown();
-        $(".message").html("Vous avez fini le jeu ! Bravo !");
+        $(".message").html("Bravo ! Vous avez fini le mode tetris 2048, n'hésitez pas à partager votre performance sur le chat <span id='test'>☺</span>");
     }
 
 }
 
-function testImpossibleBas(){ // retourne false si possible de fusionner ou possible d'aller en bas
-    if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
-       || grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "" || ValeurCaseX == 4){
-        console.log( grille[ValeurCaseX+1][ValeurCaseY].getValeur());
+function testImpossibleBas() { // retourne false si possible de fusionner ou possible d'aller en bas
+    if (grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX + 1][ValeurCaseY].getValeur()
+        || grille[ValeurCaseX + 1][ValeurCaseY].getValeur() == "" || ValeurCaseX == 4) {
         return false;
     }
     else {
-        console.log( grille[ValeurCaseX+1][ValeurCaseY].getValeur());
         return true;
     }
 }
 
 function deplacementCaseVersBas() {
-    console.log(ValeurCaseX);
 
-    console.log(ValeurCaseY);
     // Déplacer la case vers le bas de 1
-    if (ValeurCaseX == 4){
+    if (ValeurCaseX == 4) {
         newValeur();
         afficherGrille();
     }
-    if (grille[ValeurCaseX+1][ValeurCaseY].getValeur() == "") {
-        
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+    if (grille[ValeurCaseX + 1][ValeurCaseY].getValeur() == "") {
+
+        grille[ValeurCaseX + 1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
-        ValeurCaseX = ValeurCaseX+1;
+
+        ValeurCaseX = ValeurCaseX + 1;
         ValeurCaseY = ValeurCaseY;
         afficherGrille();
         // if(grille[ValeurCaseX+1][ValeurCaseY].getValeur() != grille[4][ValeurCaseY].getValeur()){
@@ -266,18 +302,18 @@ function deplacementCaseVersBas() {
         // }
     }
     // Si pas de case vide en dessous, regarde si possibilité de fusionner
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX+1][ValeurCaseY].getValeur() 
-            && grille[ValeurCaseX][ValeurCaseY].getValeur() != ""){
-        
-        grille[ValeurCaseX+1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+    else if (grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX + 1][ValeurCaseY].getValeur()
+        && grille[ValeurCaseX][ValeurCaseY].getValeur() != "") {
+
+        grille[ValeurCaseX + 1][ValeurCaseY].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
-        ValeurCaseX = ValeurCaseX+1;
+
+        ValeurCaseX = ValeurCaseX + 1;
         ValeurCaseY = ValeurCaseY;
         afficherGrille();
-        if(ValeurCaseX == 4){
+        if (ValeurCaseX == 4) {
             newValeur();
-            afficherGrille(); 
+            afficherGrille();
         }
     }
     //Sinon, on ne peut donc rien faire alors on créer une nouvelle case pour continuer à jouer
@@ -288,48 +324,46 @@ function deplacementCaseVersBas() {
 }
 
 function deplacementCaseVersGauche() {
-    console.log(ValeurCaseY);
-    if (grille[ValeurCaseX][ValeurCaseY-1].getValeur() == "") {
-        
-        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+    if (grille[ValeurCaseX][ValeurCaseY - 1].getValeur() == "") {
+
+        grille[ValeurCaseX][ValeurCaseY - 1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
+
         ValeurCaseX = ValeurCaseX;
-        ValeurCaseY = ValeurCaseY-1;
+        ValeurCaseY = ValeurCaseY - 1;
         afficherGrille();
     }
     // Si pas de case vide à gauche, regarde si possibilité de fusionner
 
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY-1].getValeur()){
-        
-        grille[ValeurCaseX][ValeurCaseY-1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+    else if (grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY - 1].getValeur()) {
+
+        grille[ValeurCaseX][ValeurCaseY - 1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
+
         ValeurCaseX = ValeurCaseX;
-        ValeurCaseY = ValeurCaseY-1;
+        ValeurCaseY = ValeurCaseY - 1;
         afficherGrille();
     }
 }
 
 function deplacementCaseVersDroite() {
-    console.log(ValeurCaseY);
-    if (grille[ValeurCaseX][ValeurCaseY+1].getValeur() == "") {
-        
-        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
+    if (grille[ValeurCaseX][ValeurCaseY + 1].getValeur() == "") {
+
+        grille[ValeurCaseX][ValeurCaseY + 1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur());
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
+
         ValeurCaseX = ValeurCaseX;
-        ValeurCaseY = ValeurCaseY+1;
+        ValeurCaseY = ValeurCaseY + 1;
         afficherGrille();
     }
-    else if(grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY+1].getValeur() 
-            && grille[ValeurCaseX][ValeurCaseY].getValeur() != "" ){
-        
-        grille[ValeurCaseX][ValeurCaseY+1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
+    else if (grille[ValeurCaseX][ValeurCaseY].getValeur() == grille[ValeurCaseX][ValeurCaseY + 1].getValeur()
+        && grille[ValeurCaseX][ValeurCaseY].getValeur() != "") {
+
+        grille[ValeurCaseX][ValeurCaseY + 1].insertionValeur(grille[ValeurCaseX][ValeurCaseY].getValeur() * 2);
         grille[ValeurCaseX][ValeurCaseY].insertionValeur("");
-        
+
         ValeurCaseX = ValeurCaseX;
-        ValeurCaseY = ValeurCaseY+1;
+        ValeurCaseY = ValeurCaseY + 1;
         afficherGrille();
     }
 }
@@ -348,9 +382,33 @@ function fusionerVersBas() {
 
 function testFusionBas() {
     var tmp = false;
-    for (j = 0; j < 4; j++) {
+    for (j = 0; j < 5; j++) {
         for (i = 3; i > 0; i--) {
             if (grille[i][j].getValeur() == grille[i - 1][j].getValeur() && grille[i][j].getValeur() != "") {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
+}
+
+function testFusionDroite() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 3; i > 0; i--) {
+            if (grille[j][i].getValeur() == grille[j][i - 1].getValeur() && grille[j][i].getValeur() != 0) {
+                tmp = true;
+            }
+        }
+    }
+    return tmp;
+}
+
+function testFusionGauche() {
+    var tmp = false;
+    for (j = 0; j < 4; j++) {
+        for (i = 0; i < 3; i++) {
+            if (grille[j][i].getValeur() == grille[j][i + 1].getValeur() && grille[j][i].getValeur() != 0) {
                 tmp = true;
             }
         }
