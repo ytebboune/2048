@@ -71,6 +71,16 @@ app.get('/classement', function(req, res){
         });
 });
 
+/*app.get('/:id', (req, res) => {
+    res.render(req.params["id"], { user: req.cookies.user }, (err, file) => {
+    if (err) {
+        res.status(404).redirect('/error404');
+    } else
+        res.send(file);
+});
+});*/
+
+
 app.get('/myaccount', userController.getProfil);
 
 app.post('/myaccount', userController.modifProfil);
@@ -85,7 +95,10 @@ app.post('/loginVerif', userController.login);
 
 app.post('/nouveauRecord', classementController.NouveauRecord);
 
-app.post('/admin', userController.supprimerUsers)
+app.post('/admin', userController.supprimerUsers);
+
+
+
 
 app.listen(1313);
 
